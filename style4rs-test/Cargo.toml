@@ -1,0 +1,12 @@
+[package]
+name = "style4rs-test"
+version = "0.1.2"
+edition = "2021"
+
+[dependencies]
+style4rs = { path = "../style4rs" }
+style4rs-builder = { path = "../style4rs-builder" }
+
+[build-dependencies]
+style4rs-builder = { path = "../style4rs-builder" }
+

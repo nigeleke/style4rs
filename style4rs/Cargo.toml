@@ -1,0 +1,13 @@
+[package]
+name = "style4rs"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+proc_macro = true
+
+[dependencies]
+proc-macro2 = { version = "1.0.69", features = ["proc-macro"] }
+quote = "1.0.33"
+style4rs-util = { path = "../style4rs-util" }
+syn = { version = "2.0.39", features = ["full", "visit"] }

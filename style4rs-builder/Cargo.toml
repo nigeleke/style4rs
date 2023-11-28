@@ -1,0 +1,11 @@
+[package]
+name = "style4rs-builder"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+proc-macro2 = "1.0.70"
+style4rs-util = { path = "../style4rs-util" }
+syn = { version = "2.0.39", features = ["full", "visit"] }
+time = { version = "0.3.30", features = ["formatting", "local-offset", "macros"] }
+walkdir = "2.4.0"
