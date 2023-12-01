@@ -18,9 +18,12 @@ It isn't intended to compete with / replace [stylers](https://github.com/abishek
 | style_sheet!          |    -     |      ✓      |
 | style_str!            |    -     |      ✓      |
 | style_sheet_str!      |    -     |      ✓      |
-| css validation        |    -     |      ✓      |
+| css validation        |  ✓ [1]   |    ✓ [2]    |
 | custom pseudo classes |    -     |      ✓      |
 | Release version       |   none   | 1.0.0-alpha |
+
+[1] Syntactic
+[2] Semantic
 
 ## Development
 
