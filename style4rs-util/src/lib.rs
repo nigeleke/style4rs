@@ -1,7 +1,9 @@
-use proc_macro2::{Delimiter, TokenStream, TokenTree};
+use proc_macro2::{Delimiter, Span, TokenStream, TokenTree};
+use regex::Regex;
 
 use std::collections::hash_map::DefaultHasher;
 use std::hash::*;
+use std::ops::Range;
 
 fn hash_delimiter(delimiter: Delimiter, hasher: &mut DefaultHasher) {
     hasher.write(format!("{:?}", delimiter).as_bytes());
@@ -36,4 +38,17 @@ pub fn as_class_name(input: &TokenStream) -> String {
     hash_stream(input, &mut hasher);
     let hash = hasher.finish();
     format!("rcn-{:x}", hash)
+}
+
+/// Emualate the `proc_macro::Span::byte_range` method.
+/// Rely on the debug format of `#n bytes(from..to))`.
+/// TODO: Remove this when `byte_range` becomes available on the stable build...
+///
+pub fn byte_range(span: &Span) -> Range<usize> {
+    let span = &format!("{:?}", span);
+    let re = Regex::new(r"^#0 bytes\((\d+)\.\.(\d+)\)$").unwrap();
+    let captures = re.captures(span).unwrap();
+    let start = captures[1].parse::<usize>().unwrap();
+    let end = captures[2].parse::<usize>().unwrap();
+    start..end
 }

@@ -9,8 +9,10 @@ use std::path::Path;
 #[test]
 fn it_can_be_invoked() {
     let class_name = style! {
-        color: white;
-        background-color: black;
+        div {
+            color: white;
+            background-color: black;
+        }
     };
     assert!(class_name.starts_with("rcn-"));
 }

@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 proc-macro2 = { version = "1.0.69", features = ["proc-macro"] }
 quote = "1.0.33"
+regex = "1.10.2"

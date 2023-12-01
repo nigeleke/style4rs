@@ -1,6 +1,6 @@
 use style4rs_util::as_class_name;
 
-use proc_macro2::TokenStream;
+use proc_macro2::{TokenStream, TokenTree};
 use syn::Macro;
 use syn::visit::{self, Visit};
 use time::{format_description::FormatItem, macros::*, OffsetDateTime};
@@ -14,16 +14,38 @@ use std::path::Path;
 
 #[derive(Default)]
 pub struct Style4rsBuilder {
-    class_styles: HashMap<String, TokenStream>,
+    class_styles: HashMap<String, String>,
 }
 
 impl<'ast> Visit<'ast> for Style4rsBuilder {
     fn visit_macro(&mut self, node: &'ast Macro) {
+        fn normalise(tokens: &TokenStream) -> String {
+            let mut css = String::new();
+            for token in tokens.clone().into_iter() {
+                match token {
+                    TokenTree::Group(t) => { css += &format!("({})", normalise(&t.stream()))},
+                    _ => { css += &token.to_string(); },
+                }
+            }
+            css
+        }
+
+        fn normalise_and_classify(tokens: &TokenStream) -> String {
+            let mut css = String::new();
+            for token in tokens.clone().into_iter() {
+                match token {
+                    TokenTree::Group(t) => { css += &format!("[[ {} ]]", normalise(&t.stream()))},
+                    _ => { css += &token.to_string(); },
+                }
+            }
+            css
+        }
+
         if let Some(ident) = node.path.get_ident() {
             if *ident == "style" {
                 let tokens = &node.tokens;
                 let class_name = as_class_name(tokens);
-                self.class_styles.insert(class_name, tokens.clone());
+                self.class_styles.insert(class_name, normalise_and_classify(tokens));
             }
         }
         visit::visit_macro(self, node)
@@ -44,25 +66,21 @@ impl Style4rsBuilder {
         self.rs_to_css(content)
     }
 
-    fn confirm_follow(entry: &DirEntry) -> bool {
-        let is_dir = entry.file_type().is_dir();
+    fn is_rust_file(entry: &DirEntry) -> bool {
         let is_file = entry.file_type().is_file();
         let is_rs_extension = match entry.path().extension() {
             Some(ext) => ext == "rs",
             None => false,
         };
-        is_dir || (is_file && is_rs_extension)
+        is_file && is_rs_extension
     }
 
     fn rsfiles_to_css(&mut self, dir_path: &Path) -> io::Result<()> {
-        let files_of_interest = WalkDir::new(dir_path)
-            .into_iter()
-            .filter_entry(Style4rsBuilder::confirm_follow);
+        let files_of_interest = WalkDir::new(dir_path).into_iter().flatten();
+        let files_of_interest = files_of_interest.filter(Style4rsBuilder::is_rust_file);
         
-        for entry in files_of_interest.flatten() {
-            if entry.file_type().is_file() {
-                _ = self.rsfile_to_css(entry);
-            }
+        for entry in files_of_interest {
+            _ = self.rsfile_to_css(entry);
         }
     
         Ok(())
@@ -76,7 +94,7 @@ impl Style4rsBuilder {
 
         let mut main_css = String::new();
         for (class_name, class_css) in self.class_styles.clone().into_iter() {
-            main_css += &format!("\n/* {} */\n{:?}", class_name, class_css);
+            main_css += &format!("\n/* {} */\n{}", class_name, class_css);
         }
 
         Ok(main_css)
