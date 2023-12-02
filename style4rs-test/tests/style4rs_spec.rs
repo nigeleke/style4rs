@@ -47,8 +47,10 @@ fn class_name_is_deterministic() {
 }
 
 #[test]
+#[cfg(not(tarpaulin))]
 fn macro_class_names_are_in_the_resultant_main_css() {
     // Note: the target main.css was created by the build process for the dummy lib, prior to executung these tests.
+    //       OUT_DIR is not available during tarpaulin tests.
     let target_path = env::var_os("OUT_DIR").expect("Expected $env::OUT_DIR");
     let target_path = Path::new(&target_path)
         .join("style4rs")

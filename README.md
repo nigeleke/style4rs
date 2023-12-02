@@ -11,16 +11,16 @@ This is **Work In Progress** and, at this stage, not even for development consum
 
 It isn't intended to compete with / replace [stylers](https://github.com/abishekatp/stylers), but [stylers](https://github.com/abishekatp/stylers) has a reliance on the `nightly` build which bugged me and I wanted to see if an alternate approach is feasible.
 
-|                       | style4rs |   stylers   |
-|-----------------------|:--------:|:-----------:|
-| Rust build            | Stable ✓ |  Nightly ☹  |
-| style!                |    ✓     |      ✓      |
-| style_sheet!          |    -     |      ✓      |
-| style_str!            |    -     |      ✓      |
-| style_sheet_str!      |    -     |      ✓      |
-| css validation        |  ✓ [1]   |    ✓ [2]    |
-| custom pseudo classes |    -     |      ✓      |
-| Release version       |   none   | 1.0.0-alpha |
+|                       | style4rs | stylers     |
+|-----------------------|:---------|:------------|
+| Rust build            | Stable ✓ | Nightly ☹   |
+| style!                | ✓        | ✓           |
+| style_sheet!          | -        | ✓           |
+| style_str!            | -        | ✓           |
+| style_sheet_str!      | -        | ✓           |
+| css validation        | ✓ [1]    | ✓ [2]       |
+| custom pseudo classes | -        | ✓           |
+| Release version       | none     | 1.0.0-alpha |
 
 [1] Syntactic
 [2] Semantic
