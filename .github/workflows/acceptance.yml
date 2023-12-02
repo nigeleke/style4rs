@@ -1,0 +1,42 @@
+# Run acceptance-cycle on develop commits.
+#
+# Acceptance cycle comprises:
+# - run tests on develop
+# - release into main with bumped versions
+#
+name: Acceptance Cycle
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # - name: License Header Check
+      #   run: sbt headerCheck
+
+      - name: Test
+        run: cargo tarpaulin --out xml
+
+      - name: Publish to Codecov
+        uses: codecov/codecov-action@v3
+
+      - name: Documentation
+        run: cargo doc
+
+  release:
+    needs: acceptance
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
