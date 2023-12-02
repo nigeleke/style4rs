@@ -23,7 +23,9 @@ jobs:
       #   run: sbt headerCheck
 
       - name: Test
-        run: cargo tarpaulin --out xml
+        run: |
+          cargo install cargo-tarpaulin
+          cargo tarpaulin --out xml
 
       - name: Publish to Codecov
         uses: codecov/codecov-action@v3
