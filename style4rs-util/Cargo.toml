@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+cssparser = "0.33.0"
+lightningcss = { version = "1.0.0-alpha.51", features = ["visitor"] }
+parcel_selectors = "0.26.4"
 proc-macro2 = { version = "1.0.69", features = ["proc-macro"] }
 quote = "1.0.33"
 regex = "1.10.2"
+selectors = "0.25.0"

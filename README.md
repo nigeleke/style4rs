@@ -2,6 +2,7 @@
 
 * Scoped CSS for Rust web frameworks like Leptos.
 * `style!` macro is for writing css inside rust functions directly.
+* `style_str!`` macro is same as style! macro but returns the tuple (class_name, style_val).
 
 ## Background
 
@@ -16,7 +17,7 @@ It isn't intended to compete with / replace [stylers](https://github.com/abishek
 | Rust build            | Stable ✓ | Nightly ☹   |
 | style!                | ✓        | ✓           |
 | style_sheet!          | -        | ✓           |
-| style_str!            | -        | ✓           |
+| style_str!            | ✓        | ✓           |
 | style_sheet_str!      | -        | ✓           |
 | css validation        | ✓ [1]    | ✓ [2]       |
 | custom pseudo classes | -        | ✓           |
