@@ -1,9 +1,14 @@
-use style4rs_util::as_class_name;
+use style4rs_util::{as_class_name, byte_range, css_with_class_names};
 
-use proc_macro2::{TokenStream, TokenTree};
-use syn::Macro;
-use syn::visit::{self, Visit};
-use time::{format_description::FormatItem, macros::*, OffsetDateTime};
+use syn::{
+    Macro,
+    visit::{self, Visit}
+};
+use time::{
+    format_description::FormatItem,
+    macros::*,
+    OffsetDateTime
+};
 use walkdir::{WalkDir, DirEntry};
 
 use std::collections::HashMap;
@@ -15,37 +20,26 @@ use std::path::Path;
 #[derive(Default)]
 pub struct Style4rsBuilder {
     class_styles: HashMap<String, String>,
+    current_rs_source: String,
 }
 
 impl<'ast> Visit<'ast> for Style4rsBuilder {
     fn visit_macro(&mut self, node: &'ast Macro) {
-        fn normalise(tokens: &TokenStream) -> String {
-            let mut css = String::new();
-            for token in tokens.clone().into_iter() {
-                match token {
-                    TokenTree::Group(t) => { css += &format!("({})", normalise(&t.stream()))},
-                    _ => { css += &token.to_string(); },
-                }
-            }
-            css
-        }
-
-        fn normalise_and_classify(tokens: &TokenStream) -> String {
-            let mut css = String::new();
-            for token in tokens.clone().into_iter() {
-                match token {
-                    TokenTree::Group(t) => { css += &format!("[[ {} ]]", normalise(&t.stream()))},
-                    _ => { css += &token.to_string(); },
-                }
-            }
-            css
-        }
-
         if let Some(ident) = node.path.get_ident() {
             if *ident == "style" {
                 let tokens = &node.tokens;
                 let class_name = as_class_name(tokens);
-                self.class_styles.insert(class_name, normalise_and_classify(tokens));
+                let tokens = Vec::from_iter(tokens.clone().into_iter());
+                let (first_range, last_range) = 
+                    if tokens.len() > 0 {
+                        let len = tokens.len();
+                        (byte_range(&tokens[0].span()), byte_range(&tokens[len-1].span()))
+                    } else {
+                        panic!("Style4rsBuilder found invalid or empty style! macro");
+                    };
+                let css = self.current_rs_source[first_range.start-1..last_range.end].to_string();
+                let css = css_with_class_names(&css, &class_name).unwrap();
+                self.class_styles.insert(class_name, css);
             }
         }
         visit::visit_macro(self, node)
@@ -53,17 +47,16 @@ impl<'ast> Visit<'ast> for Style4rsBuilder {
 }
 
 impl Style4rsBuilder {
-
-    pub fn rs_to_css(&mut self, rs: String) -> io::Result<()> {
-        let ast = syn::parse_str(&rs).unwrap();
+    pub fn rs_to_css(&mut self) -> io::Result<()> {
+        let ast = syn::parse_file(&self.current_rs_source).unwrap();
         self.visit_file(&ast);
         Ok(())
     }
 
     fn rsfile_to_css(&mut self, entry: DirEntry) -> io::Result<()> {
         let path = entry.path();
-        let content = fs::read_to_string(path).unwrap();
-        self.rs_to_css(content)
+        self.current_rs_source = fs::read_to_string(path).unwrap();
+        self.rs_to_css()
     }
 
     fn is_rust_file(entry: &DirEntry) -> bool {

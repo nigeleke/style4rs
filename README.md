@@ -2,29 +2,38 @@
 
 * Scoped CSS for Rust web frameworks like Leptos.
 * `style!` macro is for writing css inside rust functions directly.
-* `style_str!`` macro is same as style! macro but returns the tuple (class_name, style_val).
+* `style_str!` macro is same as style! macro but returns the tuple (class_name, style_val).
+
+## Acknowledgement
+
+This crate stems from [Abishek P](https://github.com/abishekatp)'s [stylers](https://github.com/abishekatp/stylers) repository, without which this crate would never have been created.
+
 
 ## Background
 
-This crate extracts many ideas from the great work completed by [Abishek P](https://github.com/abishekatp) in his [stylers](https://github.com/abishekatp/stylers) repository.
-
 This is **Work In Progress** and, at this stage, not even for development consumption, let alone production.
+
+Tests in this create are derived from [stylers](https://github.com/abishekatp/stylers) (and modified to reflect CSS constructs supported differently here). The core code as been re-done using the [LightningCSS Parser](https://lightningcss.dev/).
 
 It isn't intended to compete with / replace [stylers](https://github.com/abishekatp/stylers), but [stylers](https://github.com/abishekatp/stylers) has a reliance on the `nightly` build which bugged me and I wanted to see if an alternate approach is feasible.
 
-|                       | style4rs | stylers     |
-|-----------------------|:---------|:------------|
-| Rust build            | Stable ✓ | Nightly ☹   |
-| style!                | ✓        | ✓           |
-| style_sheet!          | -        | ✓           |
-| style_str!            | ✓        | ✓           |
-| style_sheet_str!      | -        | ✓           |
-| css validation        | ✓ [1]    | ✓ [2]       |
-| custom pseudo classes | -        | ✓           |
-| Release version       | none     | 1.0.0-alpha |
+|                           | style4rs       | stylers     |
+|---------------------------|:---------------|:------------|
+| Rust build                | Stable ✓       | Nightly ☹   |
+| style!                    | ✓              | ✓           |
+| style_sheet!              | -              | ✓           |
+| style_str!                | ✓              | ✓           |
+| style_sheet_str!          | -              | ✓           |
+| css validation            | ✓              | ✓           |
+| minified css              | ✓              | -           |
+| custom raw_str function   | - [1]              | ✓           |
+| __Specific CSS handling__ |                |             |
+| ::deep                    | Passed-through | Handled     |
+| @document                 | Passed-through | Handled     |
+| __Release__               |                |             |
+| Release version           | none           | 1.0.0-alpha |
 
-[1] Syntactic
-[2] Semantic
+[1] A consequence of this is not all valid CSS content is parsable if it conflicts with the rust pre-parsing. E.g. `content: "\hello"` results in compile error. Unicode escape sequences, such as `content: "\01F44D"` are ok.
 
 ## Development
 
