@@ -14,6 +14,7 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = [
           pkgs.rustup
+          pkgs.cargo-tarpaulin
           pkgs.vscode
         ];
       };

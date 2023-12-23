@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-proc-macro2 = "1.0.70"
+proc-macro2 = { version = "1.0.69", features = ["proc-macro", "span-locations"] }
 style4rs-util = { path = "../style4rs-util" }
 syn = { version = "2.0.39", features = ["full", "visit"] }
 time = { version = "0.3.30", features = ["formatting", "local-offset", "macros"] }

@@ -9,4 +9,3 @@ style4rs-builder = { path = "../style4rs-builder" }
 
 [build-dependencies]
 style4rs-builder = { path = "../style4rs-builder" }
-
