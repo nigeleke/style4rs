@@ -13,7 +13,7 @@ This crate stems from [Abishek P](https://github.com/abishekatp)'s [stylers](htt
 
 This is **Work In Progress** and, at this stage, not even for development consumption, let alone production.
 
-Tests in this crate are derived from [stylers](https://github.com/abishekatp/stylers) (and modified to reflect CSS constructs supported differently here). The core code as been re-done using the [LightningCSS Parser](https://lightningcss.dev/).
+Tests in this crate are derived from [stylers](https://github.com/abishekatp/stylers) (and modified to reflect CSS constructs supported differently here). The core code has been re-done using the [LightningCSS Parser](https://lightningcss.dev/).
 
 It isn't intended to compete with / replace [stylers](https://github.com/abishekatp/stylers), but [stylers](https://github.com/abishekatp/stylers) has a reliance on the `nightly` build which bugged me and I wanted to see if an alternate approach was feasible.
 
