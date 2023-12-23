@@ -29,9 +29,9 @@ impl<'ast> Visit<'ast> for Style4rsBuilder {
             if *ident == "style" {
                 let tokens = &node.tokens;
                 let class_name = as_class_name(tokens);
-                let tokens = Vec::from_iter(tokens.clone().into_iter());
+                let tokens = Vec::from_iter(tokens.clone());
                 let (first_range, last_range) = 
-                    if tokens.len() > 0 {
+                    if !tokens.is_empty() {
                         let len = tokens.len();
                         (byte_range(&tokens[0].span()), byte_range(&tokens[len-1].span()))
                     } else {
