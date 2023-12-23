@@ -1,4 +1,4 @@
-use style4rs_util::{as_class_name, css_with_class_names, source_from};
+use style4rs_util::token_stream_to_class_name_and_css;
 
 use proc_macro::TokenStream;
 use proc_macro2::{TokenStream as TokenStream2};
@@ -8,11 +8,8 @@ use syn::Error;
 #[proc_macro]
 pub fn style(tokens: TokenStream) -> TokenStream {
     let tokens: TokenStream2 = tokens.into();
-    let source = source_from(&tokens);
-    let class_name = as_class_name(&tokens);
-
-    match css_with_class_names(&source, &class_name) {
-        Ok(_) => {
+    match token_stream_to_class_name_and_css(&tokens) {
+        Ok((class_name, _)) => {
             quote! { #class_name }.into()
         },
         Err(err) => {
@@ -25,11 +22,8 @@ pub fn style(tokens: TokenStream) -> TokenStream {
 #[proc_macro]
 pub fn style_str(tokens: TokenStream) -> TokenStream {
     let tokens: TokenStream2 = tokens.into();
-    let source = source_from(&tokens);
-    let class_name = as_class_name(&tokens);
-
-    match css_with_class_names(&source, &class_name) {
-        Ok(css) => {
+    match token_stream_to_class_name_and_css(&tokens) {
+        Ok((class_name, css)) => {
             quote! { (#class_name, #css) }.into()
         },
         Err(err) => {

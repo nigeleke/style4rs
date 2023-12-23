@@ -1,4 +1,4 @@
-use style4rs_util::{as_class_name, byte_range, css_with_class_names};
+use style4rs_util::{as_class_name, byte_range, css_to_css_with_class_name};
 
 use syn::{
     Macro,
@@ -29,16 +29,16 @@ impl<'ast> Visit<'ast> for Style4rsBuilder {
             if *ident == "style" {
                 let tokens = &node.tokens;
                 let class_name = as_class_name(tokens);
-                let tokens = Vec::from_iter(tokens.clone().into_iter());
+                let tokens = Vec::from_iter(tokens.clone());
                 let (first_range, last_range) = 
-                    if tokens.len() > 0 {
+                    if !tokens.is_empty() {
                         let len = tokens.len();
                         (byte_range(&tokens[0].span()), byte_range(&tokens[len-1].span()))
                     } else {
                         panic!("Style4rsBuilder found invalid or empty style! macro");
                     };
                 let css = self.current_rs_source[first_range.start-1..last_range.end].to_string();
-                let css = css_with_class_names(&css, &class_name).unwrap();
+                let css = css_to_css_with_class_name(&css, &class_name).unwrap();
                 self.class_styles.insert(class_name, css);
             }
         }

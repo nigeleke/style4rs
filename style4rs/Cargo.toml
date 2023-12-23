@@ -1,6 +1,9 @@
 [package]
 name = "style4rs"
 version = "0.1.0"
+description = "Scoped CSS for Rust web frameworks like Leptos"
+licence = "MIT"
+repository = "https://github.com/nigeleke/style4rs"
 edition = "2021"
 
 [lib]

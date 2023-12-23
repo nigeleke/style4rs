@@ -6,16 +6,16 @@
 
 ## Acknowledgement
 
-This crate stems from [Abishek P](https://github.com/abishekatp)'s [stylers](https://github.com/abishekatp/stylers) repository, without which this crate would never have been created.
+This crate stems from [Abishek P](https://github.com/abishekatp)'s [stylers](https://github.com/abishekatp/stylers) repository, without which this crate would never have been possible.
 
 
 ## Background
 
 This is **Work In Progress** and, at this stage, not even for development consumption, let alone production.
 
-Tests in this create are derived from [stylers](https://github.com/abishekatp/stylers) (and modified to reflect CSS constructs supported differently here). The core code as been re-done using the [LightningCSS Parser](https://lightningcss.dev/).
+Tests in this crate are derived from [stylers](https://github.com/abishekatp/stylers) (and modified to reflect CSS constructs supported differently here). The core code has been re-done using the [LightningCSS Parser](https://lightningcss.dev/).
 
-It isn't intended to compete with / replace [stylers](https://github.com/abishekatp/stylers), but [stylers](https://github.com/abishekatp/stylers) has a reliance on the `nightly` build which bugged me and I wanted to see if an alternate approach is feasible.
+It isn't intended to compete with / replace [stylers](https://github.com/abishekatp/stylers), but [stylers](https://github.com/abishekatp/stylers) has a reliance on the `nightly` build which bugged me and I wanted to see if an alternate approach was feasible.
 
 |                           | style4rs       | stylers     |
 |---------------------------|:---------------|:------------|
@@ -33,11 +33,13 @@ It isn't intended to compete with / replace [stylers](https://github.com/abishek
 | __Release__               |                |             |
 | Release version           | none           | 1.0.0-alpha |
 
-[1] A consequence of this is not all valid CSS content is parsable if it conflicts with the rust pre-parsing. E.g. `content: "\hello"` results in compile error. Unicode escape sequences, such as `content: "\01F44D"` are ok.
+[1] A consequence of this is not all valid CSS content is parsable if it conflicts with the rust pre-parsing. E.g. `content: "\hello"` results in compile error, whereas `content: "\\hello"` results in css with `\\` rather than the _rust escaped_ `\`. Unicode escape sequences, such as `content: "\01F44D"` appear ok.
 
 ## Development
 
-`nix develop --impure` will set up an appropriate [Rust](https://www.rust-lang.org/) development environment, with Vscode.
+[Nix](https://nixos.org/) can be used to set up a development environment.
+
+Running `> nix develop --impure` will set up [Rust](https://www.rust-lang.org/) with Vscode.
 
 ## Usage
 
@@ -95,6 +97,8 @@ pub fn the_class_name() -> String {
 ```
 
 ### build.rs
+
+See [Build Scripts - The Cargo Book](https://doc.rust-lang.org/cargo/reference/build-scripts.html).
 
 ```rust
 use style4rs_builder::*;

@@ -19,11 +19,11 @@ pub fn source_from(tokens: &TokenStream) -> String {
     let group = Group::new(Delimiter::None, tokens.clone());
     let source = group.span().source_text().unwrap();
 
-    let tokens = Vec::from_iter(tokens.clone().into_iter());
+    let tokens = Vec::from_iter(tokens.clone());
 
     let group_range = byte_range(&group.span());
     let (first_range, last_range) = 
-        if tokens.len() > 0 {
+        if !tokens.is_empty() {
             let len = tokens.len();
             (byte_range(&tokens[0].span()), byte_range(&tokens[len-1].span()))
         } else {
@@ -101,10 +101,21 @@ pub fn byte_range(span: &Span) -> Range<usize> {
     start..end
 }
 
+/// Return css with deterministic class name inserted, from a `proc_macro::TokenStream` source.
+///
+pub fn token_stream_to_class_name_and_css(tokens: &TokenStream) -> Result<(String, String), String> {
+    let source = source_from(tokens);
+    let class_name = as_class_name(tokens);
+    match css_to_css_with_class_name(&source, &class_name) {
+        Ok(css) => { Ok((class_name, css)) },
+        Err(err) => { Err(err) },
+    }
+}
+
 /// Compile css and return with deterministic class name inserted.
 ///
-pub fn css_with_class_names(input: &String, class_name: &String) -> Result<String, String> {
-    insert_class_name(&input, &class_name)
+pub fn css_to_css_with_class_name(input: &str, class_name: &str) -> Result<String, String> {
+    insert_class_name(input, class_name)
 }
 
 #[derive(Clone, Debug, Default)]
@@ -117,8 +128,8 @@ struct InserterState<'a> {
 }
 
 impl<'a> InserterState<'a> {
-    fn new(class_name: &String) -> Self {
-        Self { class_name: class_name.clone(), ..InserterState::default() }
+    fn new(class_name: &str) -> Self {
+        Self { class_name: class_name.to_owned(), ..InserterState::default() }
     }
 
     fn set_for_next_selector(&mut self) {
@@ -132,13 +143,13 @@ impl<'a> InserterState<'a> {
 
     fn push_previous_combinator(&mut self) {
         if let Some(c) = self.previous_combinator {
-            self.push_component(&Component::Combinator(c.clone()));
+            self.push_component(&Component::Combinator(c));
             self.previous_combinator = None;
         }
     }
 
     fn push_combinator_and_persist_selector(&mut self, c: &Combinator) {
-        self.previous_combinator = Some(c.clone());
+        self.previous_combinator = Some(*c);
         self.persist_selector();
     }
 
@@ -175,7 +186,7 @@ struct CustomClassInserter<'a> {
 }
 
 impl CustomClassInserter<'_> {
-    fn new(class_name: &String) -> Self {
+    fn new(class_name: &str) -> Self {
         Self { state: InserterState::new(class_name), }
     }
 }
@@ -193,7 +204,7 @@ impl<'i> Visitor<'i> for CustomClassInserter<'i> {
         loop {
             self.state.set_for_next_selector();
 
-            while let Some(s) = iter.next() {
+            for s in iter.by_ref() {
                 match s {
                     Component::ExplicitUniversalType => { /* * replaced by rcn class */ },
                     Component::Negation(_) |
@@ -240,7 +251,7 @@ impl<'i> Visitor<'i> for CustomClassInserter<'i> {
     }
 }
 
-fn insert_class_name(css: &String, class_name: &String) -> Result<String, String> {
+fn insert_class_name(css: &str, class_name: &str) -> Result<String, String> {
     let mut inserter = CustomClassInserter::new(class_name);
     let parser_options = ParserOptions::default();
     let mut stylesheet = StyleSheet::parse(css, parser_options).unwrap();
