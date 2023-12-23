@@ -43,17 +43,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      # TODO: Bump version ???
+      # TODO: Bump version using cargo-release ???
       - name: Build
         run: |
           git config --global user.email "nigeleke@users.noreply.github.com"
           git config --global user.name "Nigel Eke"
           export VERSION=$(cargo metadata --format-version 1 --no-deps | grep -A 2 '"name":"style4rs"' | grep '"version"' | awk '{print $2}' | tr -d '",')
-          echo $VERSION
-          cargo install cargo-release
-          cargo release --help
-          cargo release --package style4rs --no-verify
-# export VERSION=$(git describe --abbrev=0 --tags)
-# git checkout main
-# git merge $VERSION
-# git push
+          git tag $VERSION
+          git checkout main
+          git merge $VERSION
+          git push
+
+# cargo install cargo-release
+# cargo release --help
+# cargo release --package style4rs --no-verify
