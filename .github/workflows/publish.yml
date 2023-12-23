@@ -33,6 +33,10 @@ jobs:
           cp README.md docs0/
           cp -R target/doc/style4rs/* docs0/core
           cp -R target/doc/tarpaulin-report.html docs0/coverage/index.html
+          cargo tarpaulin --out xml
+
+      - name: Publish to Codecov
+        uses: codecov/codecov-action@v3
 
       - name: Publish
         run: |
