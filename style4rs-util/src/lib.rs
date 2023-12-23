@@ -101,9 +101,20 @@ pub fn byte_range(span: &Span) -> Range<usize> {
     start..end
 }
 
+/// Return css with deterministic class name inserted, from a `proc_macro::TokenStream` source.
+///
+pub fn token_stream_to_class_name_and_css(tokens: &TokenStream) -> Result<(String, String), String> {
+    let source = source_from(tokens);
+    let class_name = as_class_name(tokens);
+    match css_to_css_with_class_name(&source, &class_name) {
+        Ok(css) => { Ok((class_name, css)) },
+        Err(err) => { Err(err) },
+    }
+}
+
 /// Compile css and return with deterministic class name inserted.
 ///
-pub fn css_with_class_names(input: &str, class_name: &str) -> Result<String, String> {
+pub fn css_to_css_with_class_name(input: &str, class_name: &str) -> Result<String, String> {
     insert_class_name(input, class_name)
 }
 

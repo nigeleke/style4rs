@@ -1,4 +1,4 @@
-use style4rs_util::{as_class_name, byte_range, css_with_class_names};
+use style4rs_util::{as_class_name, byte_range, css_to_css_with_class_name};
 
 use syn::{
     Macro,
@@ -38,7 +38,7 @@ impl<'ast> Visit<'ast> for Style4rsBuilder {
                         panic!("Style4rsBuilder found invalid or empty style! macro");
                     };
                 let css = self.current_rs_source[first_range.start-1..last_range.end].to_string();
-                let css = css_with_class_names(&css, &class_name).unwrap();
+                let css = css_to_css_with_class_name(&css, &class_name).unwrap();
                 self.class_styles.insert(class_name, css);
             }
         }
