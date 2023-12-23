@@ -1,13 +1,18 @@
 # style4rs
 
+[![MIT License](https://img.shields.io/github/license/nigeleke/style4rs?style=plastic)](https://github.com/nigeleke/style4rs/blob/main/LICENCE.md)
+[![Language](https://img.shields.io/badge/language-Rust-blue.svg?style=plastic)](https://www.scala-lang.org)
+[![Build](https://img.shields.io/github/actions/workflow/status/nigeleke/style4rs/acceptance.yml?style=plastic)](https://github.com/nigeleke/style4rs/actions/workflows/acceptance.yml)
+[![Coverage](https://img.shields.io/codecov/c/github/nigeleke/style4rs?style=plastic)](https://codecov.io/gh/nigeleke/style4rs)
+![Version](https://img.shields.io/github/v/tag/nigeleke/style4rs?style=plastic)
+
 * Scoped CSS for Rust web frameworks like Leptos.
 * `style!` macro is for writing css inside rust functions directly.
 * `style_str!` macro is same as style! macro but returns the tuple (class_name, style_val).
 
 ## Acknowledgement
 
-This crate stems from [Abishek P](https://github.com/abishekatp)'s [stylers](https://github.com/abishekatp/stylers) repository, without which this crate would never have been possible.
-
+This crate stems from the [stylers](https://github.com/abishekatp/stylers) repository by [Abishek P](https://github.com/abishekatp), without which this crate would never have been possible.
 
 ## Background
 
@@ -26,7 +31,7 @@ It isn't intended to compete with / replace [stylers](https://github.com/abishek
 | style_sheet_str!          | -              | ✓           |
 | css validation            | ✓              | ✓           |
 | minified css              | ✓              | -           |
-| custom raw_str function   | - [1]              | ✓           |
+| custom raw_str function   | - [1]          | ✓           |
 | __Specific CSS handling__ |                |             |
 | ::deep                    | Passed-through | Handled     |
 | @document                 | Passed-through | Handled     |
