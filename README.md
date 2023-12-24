@@ -25,7 +25,16 @@ This is **Work In Progress** and, at this stage, currently being tested in anoth
 
 The reason for this crate's development was because [stylers](https://github.com/abishekatp/stylers) has a reliance on the [Rust](https://www.rust-lang.org/) `nightly` build. This bugged me and I wanted to see if an alternate approach was feasible. The result is this crate.
 
-If you're choosing between this & [stylers](https://github.com/abishekatp/stylers), the following comparision may help:
+## Documentation
+
+* [Site](https://nigeleke.github.io/style4rs)
+* [GitHub](https://github.com/nigeleke/style4rs)
+* [Crates](https://nigeleke.github.io/style4rs/core/index.html)
+* [Coverage Report](https://nigeleke.github.io/style4rs/coverage/index.html)
+
+## Comparison
+
+If you're choosing between [style4rs](https://nigeleke.github.io/style4rs/) & [stylers](https://github.com/abishekatp/stylers), the following comparision may help:
 
 |                           | style4rs         | stylers     |                                                                                                                                                                                                                                                                                                                                                     |
 |---------------------------|:-----------------|:------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -36,16 +45,14 @@ If you're choosing between this & [stylers](https://github.com/abishekatp/styler
 | style_sheet!              | ✓                | ✓           |                                                                                                                                                                                                                                                                                                                                                     |
 | style_str!                | ✓                | ✓           |                                                                                                                                                                                                                                                                                                                                                     |
 | style_sheet_str!          | ✓                | ✓           |                                                                                                                                                                                                                                                                                                                                                     |
-| css validation            | ✓                | ✓✓          | `style4rs` highlights syntactic errors around the entire CSS block (with an error message described by [lightningcss](https://lightningcss.dev/)).<br/>`stylers` highlights errors at their precise line and provides semantic checks / hints.                                                                                                      |
+| css validation            | ✓                | ✓+          | `style4rs` highlights syntactic errors around the entire CSS block (with an error message described by [lightningcss](https://lightningcss.dev/)).<br/>`stylers` highlights errors at their precise line and also provides semantic checks / hints.                                                                                                      |
 | __Misc__                  |                  |             |                                                                                                                                                                                                                                                                                                                                                     |
 | custom `raw_str` function | x                | ✓           | A consequence of not supporting a `raw_str` function is not all valid CSS content is parsable if it conflicts with the rust parsing. E.g. `content: "\hello"` results in compile error, whereas `content: "\\hello"` results in css with `\\` rather than the _rust escaped_ `\`. Unicode escape sequences, such as `content: "\01F44D"` appear ok. |
 | __Specific CSS handling__ |                  |             |                                                                                                                                                                                                                                                                                                                                                     |
-| ::deep                    | Passed-through   | Handled     | The best approach for handling these is to be determined. At this stage, my other projects are unlikely to require this CSS. Feel free to raise an issue / use-case to be discussed.                                                                                                                                                                |
+| ::deep                    | Passed-through   | Handled     | The best approach for handling these is to be determined. At this stage, my other projects are unlikely to require this CSS. Feel free to raise an issue / use-case if deemed required.                                                                                                                                                                |
 | @document                 | Passed-through   | Handled     | "                                                                                                                                                                                                                                                                                                                                                   |
 | __Released ?__            |                  |             |                                                                                                                                                                                                                                                                                                                                                     |
 | Release version           | Not in crates.io | 1.0.0-alpha |                                                                                                                                                                                                                                                                                                                                                     |
-
-
 ## Development
 
 [Nix](https://nixos.org/) can be used to set up a development environment.
