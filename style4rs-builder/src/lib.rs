@@ -1,3 +1,5 @@
+// Tested in style4rs-test module...
+//
 use style4rs_util::{as_class_name, byte_range, css_to_css_with_class_name};
 
 use syn::{

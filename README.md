@@ -1,7 +1,7 @@
 # style4rs
 
 [![MIT License](https://img.shields.io/github/license/nigeleke/style4rs?style=plastic)](https://github.com/nigeleke/style4rs/blob/main/LICENCE.md)
-[![Language](https://img.shields.io/badge/language-Rust-blue.svg?style=plastic)](https://www.scala-lang.org)
+[![Language](https://img.shields.io/badge/language-Rust-blue.svg?style=plastic)](https://www.rust-lang.org/)
 [![Build](https://img.shields.io/github/actions/workflow/status/nigeleke/style4rs/acceptance.yml?style=plastic)](https://github.com/nigeleke/style4rs/actions/workflows/acceptance.yml)
 [![Coverage](https://img.shields.io/codecov/c/github/nigeleke/style4rs?style=plastic)](https://codecov.io/gh/nigeleke/style4rs)
 ![Version](https://img.shields.io/github/v/tag/nigeleke/style4rs?style=plastic)
