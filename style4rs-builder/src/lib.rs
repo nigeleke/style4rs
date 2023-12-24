@@ -1,4 +1,6 @@
-use style4rs_util::{as_class_name, byte_range, css_to_css_with_class_name};
+// Tested in style4rs-test module...
+//
+use style4rs_util::{tokens_as_class_name, byte_range, css_to_css_with_class_name};
 
 use syn::{
     Macro,
@@ -26,9 +28,9 @@ pub struct Style4rsBuilder {
 impl<'ast> Visit<'ast> for Style4rsBuilder {
     fn visit_macro(&mut self, node: &'ast Macro) {
         if let Some(ident) = node.path.get_ident() {
-            if *ident == "style" {
+            if *ident == "style" || *ident == "style_str" {
                 let tokens = &node.tokens;
-                let class_name = as_class_name(tokens);
+                let class_name = tokens_as_class_name(tokens);
                 let tokens = Vec::from_iter(tokens.clone());
                 let (first_range, last_range) = 
                     if !tokens.is_empty() {

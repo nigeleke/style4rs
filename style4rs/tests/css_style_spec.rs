@@ -285,7 +285,7 @@ fn test_25() {
 
 #[test]
 fn test_26() {
-    // ++ Difference from [stylers](https://github.com/abishekatp/stylers)
+    // Difference from [stylers](https://github.com/abishekatp/stylers)
     // Namespaces do not have custom class appended.
     let (class_name, style) = style_str! {
         svg|a {
