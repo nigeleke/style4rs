@@ -14,7 +14,9 @@ p:lang(it) {
     background: yellow;
 }
 
-svg|a {}
+svg|a {
+    background-color: aliceblue;
+}
 
 :not(body) {
     background: #ff0000;

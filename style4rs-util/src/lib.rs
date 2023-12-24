@@ -1,4 +1,5 @@
 use lightningcss::{
+    rules::CssRule,
     selector::{Combinator, Component, PseudoClass, Selector},
     stylesheet::{StyleSheet, ParserOptions, PrinterOptions},
     visitor::{Visit, Visitor, VisitTypes},
@@ -37,9 +38,19 @@ pub fn source_from(tokens: &TokenStream) -> String {
     source[start_offset..end_offset].to_string()
 }
 
+
+/// Create a deterministic class name based on the string.
+///
+pub fn str_as_class_name(input: &str) -> String {
+    let mut hasher = DefaultHasher::new();
+    input.hash(&mut hasher);
+    let hash = hasher.finish();
+    format!("rcn-{:x}", hash)
+}
+
 /// Create a deterministic class name based on the TokenStream.
 ///
-pub fn as_class_name(input: &TokenStream) -> String {
+pub fn tokens_as_class_name(input: &TokenStream) -> String {
     let mut hasher = DefaultHasher::new();
     hash_stream(input, &mut hasher);
     let hash = hasher.finish();
@@ -103,9 +114,22 @@ pub fn byte_range(span: &Span) -> Range<usize> {
 
 /// Return css with deterministic class name inserted, from a `proc_macro::TokenStream` source.
 ///
-pub fn token_stream_to_class_name_and_css(tokens: &TokenStream) -> Result<(String, String), String> {
+pub fn tokens_to_class_name_and_css(tokens: &TokenStream) -> Result<(String, String), String> {
     let source = source_from(tokens);
-    let class_name = as_class_name(tokens);
+    let class_name = tokens_as_class_name(tokens);
+    match css_to_css_with_class_name(&source, &class_name) {
+        Ok(css) => { Ok((class_name, css)) },
+        Err(err) => { Err(err) },
+    }
+}
+
+/// Return css with deterministic class name inserted, from a file referenced in the `proc_macro::TokenStream` source.
+///
+pub fn file_path_tokens_to_class_name_and_css(tokens: &TokenStream) -> Result<(String, String), String> {
+    let file_path = tokens.to_string();
+    let file_path = file_path.trim_matches('"');
+    let source = std::fs::read_to_string(file_path).expect("Expected to read file");
+    let class_name = str_as_class_name(&source);
     match css_to_css_with_class_name(&source, &class_name) {
         Ok(css) => { Ok((class_name, css)) },
         Err(err) => { Err(err) },
@@ -195,8 +219,13 @@ impl<'i> Visitor<'i> for CustomClassInserter<'i> {
     type Error = ();
 
     fn visit_types(&self) -> VisitTypes {
-        visit_types!(SELECTORS)
+        visit_types!(SELECTORS) // | RULES)
     }
+    
+    // fn visit_rule(&mut self, rule: &mut CssRule<'i>) -> Result<(), Self::Error> {
+    //     println!("***** ***** Rule {:?}", rule);
+    //     rule.visit_children(self)
+    // }
 
     fn visit_selector(&mut self, selector: &mut Selector<'i>) -> Result<(), Self::Error> {
         let mut iter = selector.iter();
