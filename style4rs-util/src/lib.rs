@@ -114,6 +114,7 @@ pub fn byte_range(span: &Span) -> Range<usize> {
 /// Return css with deterministic class name inserted, from a `proc_macro::TokenStream` source.
 ///
 pub fn tokens_to_class_name_and_css(tokens: &TokenStream) -> Result<(String, String), String> {
+    println!("tokens_to_class_name_and_css");
     let source = source_from(tokens);
     let class_name = tokens_as_class_name(tokens);
     match css_to_css_with_class_name(&source, &class_name) {
@@ -125,6 +126,7 @@ pub fn tokens_to_class_name_and_css(tokens: &TokenStream) -> Result<(String, Str
 /// Return css with deterministic class name inserted, from a file referenced in the `proc_macro::TokenStream` source.
 ///
 pub fn file_path_tokens_to_class_name_and_css(tokens: &TokenStream) -> Result<(String, String), String> {
+    println!("file_path_tokens_to_class_name_and_css");
     let file_path = tokens.to_string();
     let file_path = file_path.trim_matches('"');
     let source = std::fs::read_to_string(file_path).expect("Expected to read file");
@@ -138,6 +140,7 @@ pub fn file_path_tokens_to_class_name_and_css(tokens: &TokenStream) -> Result<(S
 /// Compile css and return with deterministic class name inserted.
 ///
 pub fn css_to_css_with_class_name(input: &str, class_name: &str) -> Result<String, String> {
+    println!("css_to_css_with_class_name");
     insert_class_name(input, class_name)
 }
 
@@ -277,6 +280,9 @@ impl<'i> Visitor<'i> for CustomClassInserter<'i> {
 fn insert_class_name(css: &str, class_name: &str) -> Result<String, String> {
     let mut inserter = CustomClassInserter::new(class_name);
     let parser_options = ParserOptions::default();
+
+    println!("insert_class_name:: {:?} into\n{:?}", class_name, css);
+
     let mut stylesheet = StyleSheet::parse(css, parser_options).unwrap();
     let _ = stylesheet.visit(&mut inserter);
     let printer_options = PrinterOptions { minify: true, ..PrinterOptions::default() };
