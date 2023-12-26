@@ -26,14 +26,14 @@ jobs:
         run: |
           cargo doc --package style4rs --no-deps
           cargo install cargo-tarpaulin
-          cargo tarpaulin --out html --output-dir target/doc --jobs 1
+          cargo tarpaulin --out html --output-dir target/doc
           mkdir docs0
           mkdir -p docs0/core
           mkdir -p docs0/coverage
           cp README.md docs0/
           cp -R target/doc/style4rs/* docs0/core
           cp -R target/doc/tarpaulin-report.html docs0/coverage/index.html
-          cargo tarpaulin --out xml --jobs 1
+          cargo tarpaulin --out xml
 
       - name: Publish to Codecov
         uses: codecov/codecov-action@v3

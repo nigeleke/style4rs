@@ -21,6 +21,8 @@ use std::path::Path;
 
 #[derive(Default)]
 pub struct Style4rsBuilder {
+    in_path: String,
+    out_path: String,
     class_styles: HashMap<String, String>,
     current_rs_source: String,
 }
@@ -82,8 +84,7 @@ impl Style4rsBuilder {
     }
 
     fn extract_css_from_macros(&mut self) -> io::Result<String> {
-        let source_path = env::var_os("CARGO_MANIFEST_DIR").expect("Expected $env::CARGO_MANIFEST_DIR");
-        let source_path = Path::new(&source_path).join("src");
+        let source_path = Path::new(&self.in_path).join("src");
 
         self.rsfiles_to_css(&source_path).unwrap();
 
@@ -96,9 +97,7 @@ impl Style4rsBuilder {
     }
 
     fn write_to_main_css(&self, css: &String) -> io::Result<()> {
-        let target_path = env::var_os("OUT_DIR").expect("Expected $env::OUT_DIR");
-        let target_path = Path::new(&target_path)
-            .join("style4rs");
+        let target_path = Path::new(&self.out_path).join("style4rs");
         fs::create_dir_all(&target_path).unwrap();
         let target_path = target_path
             .join("main.css");
@@ -115,7 +114,14 @@ impl Style4rsBuilder {
     }
 
     pub fn build() -> io::Result<()> {
-        let mut builder = Style4rsBuilder::default();
+        Style4rsBuilder::build_using(None, None)
+    }
+
+    pub fn build_using(maybe_in_path: Option<String>, maybe_out_path: Option<String>) -> io::Result<()> {
+        let in_path = maybe_in_path.or(env::var("CARGO_MANIFEST_DIR").ok()).unwrap();
+        let out_path = maybe_out_path.or(env::var("OUT_DIR").ok()).unwrap();
+
+        let mut builder = Style4rsBuilder { in_path, out_path, ..Style4rsBuilder::default() };
         let css = builder.extract_css_from_macros().unwrap();
         _ = builder.write_to_main_css(&css);
         Ok(())
