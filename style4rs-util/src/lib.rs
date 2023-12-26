@@ -126,11 +126,12 @@ pub fn tokens_to_class_name_and_css(tokens: &TokenStream) -> Result<(String, Str
 /// Return css with deterministic class name inserted, from a file referenced in the `proc_macro::TokenStream` source.
 ///
 pub fn file_path_tokens_to_class_name_and_css(tokens: &TokenStream) -> Result<(String, String), String> {
-    println!("file_path_tokens_to_class_name_and_css");
+    println!("************ file_path_tokens_to_class_name_and_css");
     let file_path = tokens.to_string();
     let file_path = file_path.trim_matches('"');
     let source = std::fs::read_to_string(file_path).expect("Expected to read file");
     let class_name = str_as_class_name(&source);
+    println!("************ file_path_tokens_to_class_name_and_css for class_name {:?} in source\n{:?}", class_name, source);
     match css_to_css_with_class_name(&source, &class_name) {
         Ok(css) => { Ok((class_name, css)) },
         Err(err) => { Err(err) },
