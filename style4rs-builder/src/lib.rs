@@ -60,6 +60,7 @@ impl Style4rsBuilder {
     fn rsfile_to_css(&mut self, entry: DirEntry) -> io::Result<()> {
         let path = entry.path();
         self.current_rs_source = fs::read_to_string(path).unwrap();
+        println!("rsfile_to_css::source {:?}", self.current_rs_source);
         self.rs_to_css()
     }
 
@@ -73,10 +74,13 @@ impl Style4rsBuilder {
     }
 
     fn rsfiles_to_css(&mut self, dir_path: &Path) -> io::Result<()> {
+        println!("rsfiles_to_css::dir_path {:?}", dir_path);
+
         let files_of_interest = WalkDir::new(dir_path).into_iter().flatten();
         let files_of_interest = files_of_interest.filter(Style4rsBuilder::is_rust_file);
         
         for entry in files_of_interest {
+            println!("rsfiles_to_css::entry {:?}", entry);
             _ = self.rsfile_to_css(entry);
         }
     
