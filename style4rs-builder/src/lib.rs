@@ -104,7 +104,7 @@ impl Style4rsBuilder {
             .join("main.css");
 
         const FORMAT: &[FormatItem<'_>] = format_description!("[year]-[month]-[day] [hour]:[minute] [[UTC[offset_hour sign:mandatory padding:zero]]");
-        let now = OffsetDateTime::now_local().unwrap().format(FORMAT).unwrap();
+        let now = OffsetDateTime::now_local().unwrap_or(OffsetDateTime::now_utc()).format(FORMAT).unwrap();
         fs::write(target_path, format!(r"/*
  * This file was generated using Style4rsBuilder,
  * ANY EDITS MAY BE OVERWRITTEN.

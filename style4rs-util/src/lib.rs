@@ -1,5 +1,4 @@
 use lightningcss::{
-    rules::CssRule,
     selector::{Combinator, Component, PseudoClass, Selector},
     stylesheet::{StyleSheet, ParserOptions, PrinterOptions},
     visitor::{Visit, Visitor, VisitTypes},
@@ -219,14 +218,9 @@ impl<'i> Visitor<'i> for CustomClassInserter<'i> {
     type Error = ();
 
     fn visit_types(&self) -> VisitTypes {
-        visit_types!(SELECTORS) // | RULES)
+        visit_types!(SELECTORS)
     }
     
-    // fn visit_rule(&mut self, rule: &mut CssRule<'i>) -> Result<(), Self::Error> {
-    //     println!("***** ***** Rule {:?}", rule);
-    //     rule.visit_children(self)
-    // }
-
     fn visit_selector(&mut self, selector: &mut Selector<'i>) -> Result<(), Self::Error> {
         let mut iter = selector.iter();
 
