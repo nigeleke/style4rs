@@ -1,7 +1,8 @@
 // Tested in style4rs-test module...
 //
-use style4rs_util::{tokens_as_class_name, byte_range, css_to_css_with_class_name};
+use style4rs_util::{tokens_as_class_name, css_to_css_with_class_name};
 
+use proc_macro2::LineColumn;
 use syn::{ Macro, visit::Visit };
 use time::{
     format_description::FormatItem,
@@ -17,34 +18,27 @@ use std::io;
 use std::path::Path;
 
 #[derive(Default)]
-pub struct Style4rsBuilder {
-    in_path: String,
-    out_path: String,
+struct FileVisitor {
     class_styles: HashMap<String, String>,
-    current_rs_source: String,
+    source: String,
 }
 
-impl<'ast> Visit<'ast> for Style4rsBuilder {
+impl<'ast> Visit<'ast> for FileVisitor {
     fn visit_macro(&mut self, node: &'ast Macro) {
         if let Some(ident) = node.path.get_ident() {
             if *ident == "style" || *ident == "style_str" {
-                for token in node.tokens.clone().into_iter() {
-                    println!("visit_macro {:?}", token);
-                }
                 let tokens = &node.tokens;
                 let class_name = tokens_as_class_name(tokens);
                 let tokens = Vec::from_iter(tokens.clone());
-                let (first_range, last_range) = 
+
+                let (start, end) = 
                     if !tokens.is_empty() {
                         let len = tokens.len();
-                        let x = (byte_range(&tokens[0].span()), byte_range(&tokens[len-1].span()));
-                        println!("visit_macro::range {:?}", x);
-                        x
+                        (tokens[0].span().start(), tokens[len-1].span().end())                       
                     } else {
-                        panic!("Style4rsBuilder found invalid or empty style! macro");
+                        panic!("Style4rsBuilder found invalid or empty macro");
                     };
-                let css = self.current_rs_source[first_range.start-1..last_range.end].to_string();
-                println!("visit_macro::css\n{:?}", css);
+                let css = self.extract_source(start, end);
                 let css = css_to_css_with_class_name(&css, &class_name).unwrap();
                 self.class_styles.insert(class_name, css);
             }
@@ -52,18 +46,53 @@ impl<'ast> Visit<'ast> for Style4rsBuilder {
     }
 }
 
-impl Style4rsBuilder {
-    pub fn rs_to_css(&mut self) -> io::Result<()> {
-        let ast = syn::parse_file(&self.current_rs_source).unwrap();
+impl FileVisitor {
+    fn new(source: &str) -> Self {
+        FileVisitor { source: source.to_owned(), ..FileVisitor::default() }
+    }
+
+    fn visit(&mut self) {
+        let ast = syn::parse_file(&self.source).unwrap();
         self.visit_file(&ast);
-        Ok(())
+    }
+
+    fn extract_source(&self, start: LineColumn, end: LineColumn) -> String {
+        let mut lines: Vec<_> = self.source.lines()
+            .skip(start.line-1)
+            .take(end.line - start.line + 1)
+            .collect();
+
+        let end_index = lines.len() - 1;
+
+        lines[end_index] = &lines[end_index][..end.column];
+        lines[0] = &lines[0][start.column..];
+    
+        lines.join("\n")
+    }
+}
+
+#[derive(Default)]
+pub struct Style4rsBuilder {
+    in_path: String,
+    out_path: String,
+    class_styles: HashMap<String, String>,
+}
+
+
+impl Style4rsBuilder {
+    pub fn rs_to_css(&mut self, rs: &str) {
+        let mut visitor = FileVisitor::new(rs);
+        visitor.visit();
+        for (key, value) in visitor.class_styles {
+            self.class_styles.insert(key, value);
+        }
     }
 
     fn rsfile_to_css(&mut self, entry: DirEntry) -> io::Result<()> {
         let path = entry.path();
-        self.current_rs_source = fs::read_to_string(path).unwrap();
-        println!("rsfile_to_css::source {:?}", self.current_rs_source);
-        self.rs_to_css()
+        let source = fs::read_to_string(path).unwrap();
+        self.rs_to_css(&source);
+        Ok(())
     }
 
     fn is_rust_file(entry: &DirEntry) -> bool {
@@ -76,13 +105,10 @@ impl Style4rsBuilder {
     }
 
     fn rsfiles_to_css(&mut self, dir_path: &Path) -> io::Result<()> {
-        println!("rsfiles_to_css::dir_path {:?}", dir_path);
-
         let files_of_interest = WalkDir::new(dir_path).into_iter().flatten();
         let files_of_interest = files_of_interest.filter(Style4rsBuilder::is_rust_file);
         
         for entry in files_of_interest {
-            println!("rsfiles_to_css::entry {:?}", entry);
             _ = self.rsfile_to_css(entry);
         }
     
