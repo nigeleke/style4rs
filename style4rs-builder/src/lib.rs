@@ -2,10 +2,7 @@
 //
 use style4rs_util::{tokens_as_class_name, byte_range, css_to_css_with_class_name};
 
-use syn::{
-    Macro,
-    visit::{self, Visit}
-};
+use syn::{ Macro, visit::Visit };
 use time::{
     format_description::FormatItem,
     macros::*,
@@ -21,6 +18,8 @@ use std::path::Path;
 
 #[derive(Default)]
 pub struct Style4rsBuilder {
+    in_path: String,
+    out_path: String,
     class_styles: HashMap<String, String>,
     current_rs_source: String,
 }
@@ -29,22 +28,27 @@ impl<'ast> Visit<'ast> for Style4rsBuilder {
     fn visit_macro(&mut self, node: &'ast Macro) {
         if let Some(ident) = node.path.get_ident() {
             if *ident == "style" || *ident == "style_str" {
+                for token in node.tokens.clone().into_iter() {
+                    println!("visit_macro {:?}", token);
+                }
                 let tokens = &node.tokens;
                 let class_name = tokens_as_class_name(tokens);
                 let tokens = Vec::from_iter(tokens.clone());
                 let (first_range, last_range) = 
                     if !tokens.is_empty() {
                         let len = tokens.len();
-                        (byte_range(&tokens[0].span()), byte_range(&tokens[len-1].span()))
+                        let x = (byte_range(&tokens[0].span()), byte_range(&tokens[len-1].span()));
+                        println!("visit_macro::range {:?}", x);
+                        x
                     } else {
                         panic!("Style4rsBuilder found invalid or empty style! macro");
                     };
                 let css = self.current_rs_source[first_range.start-1..last_range.end].to_string();
+                println!("visit_macro::css\n{:?}", css);
                 let css = css_to_css_with_class_name(&css, &class_name).unwrap();
                 self.class_styles.insert(class_name, css);
             }
         }
-        visit::visit_macro(self, node)
     }
 }
 
@@ -58,6 +62,7 @@ impl Style4rsBuilder {
     fn rsfile_to_css(&mut self, entry: DirEntry) -> io::Result<()> {
         let path = entry.path();
         self.current_rs_source = fs::read_to_string(path).unwrap();
+        println!("rsfile_to_css::source {:?}", self.current_rs_source);
         self.rs_to_css()
     }
 
@@ -71,10 +76,13 @@ impl Style4rsBuilder {
     }
 
     fn rsfiles_to_css(&mut self, dir_path: &Path) -> io::Result<()> {
+        println!("rsfiles_to_css::dir_path {:?}", dir_path);
+
         let files_of_interest = WalkDir::new(dir_path).into_iter().flatten();
         let files_of_interest = files_of_interest.filter(Style4rsBuilder::is_rust_file);
         
         for entry in files_of_interest {
+            println!("rsfiles_to_css::entry {:?}", entry);
             _ = self.rsfile_to_css(entry);
         }
     
@@ -82,8 +90,7 @@ impl Style4rsBuilder {
     }
 
     fn extract_css_from_macros(&mut self) -> io::Result<String> {
-        let source_path = env::var_os("CARGO_MANIFEST_DIR").expect("Expected $env::CARGO_MANIFEST_DIR");
-        let source_path = Path::new(&source_path).join("src");
+        let source_path = Path::new(&self.in_path).join("src");
 
         self.rsfiles_to_css(&source_path).unwrap();
 
@@ -96,15 +103,13 @@ impl Style4rsBuilder {
     }
 
     fn write_to_main_css(&self, css: &String) -> io::Result<()> {
-        let target_path = env::var_os("OUT_DIR").expect("Expected $env::OUT_DIR");
-        let target_path = Path::new(&target_path)
-            .join("style4rs");
+        let target_path = Path::new(&self.out_path).join("style4rs");
         fs::create_dir_all(&target_path).unwrap();
         let target_path = target_path
             .join("main.css");
 
         const FORMAT: &[FormatItem<'_>] = format_description!("[year]-[month]-[day] [hour]:[minute] [[UTC[offset_hour sign:mandatory padding:zero]]");
-        let now = OffsetDateTime::now_local().unwrap().format(FORMAT).unwrap();
+        let now = OffsetDateTime::now_local().unwrap_or(OffsetDateTime::now_utc()).format(FORMAT).unwrap();
         fs::write(target_path, format!(r"/*
  * This file was generated using Style4rsBuilder,
  * ANY EDITS MAY BE OVERWRITTEN.
@@ -115,7 +120,14 @@ impl Style4rsBuilder {
     }
 
     pub fn build() -> io::Result<()> {
-        let mut builder = Style4rsBuilder::default();
+        Style4rsBuilder::build_using(None, None)
+    }
+
+    pub fn build_using(maybe_in_path: Option<String>, maybe_out_path: Option<String>) -> io::Result<()> {
+        let in_path = maybe_in_path.or(env::var("CARGO_MANIFEST_DIR").ok()).unwrap();
+        let out_path = maybe_out_path.or(env::var("OUT_DIR").ok()).unwrap();
+
+        let mut builder = Style4rsBuilder { in_path, out_path, ..Style4rsBuilder::default() };
         let css = builder.extract_css_from_macros().unwrap();
         _ = builder.write_to_main_css(&css);
         Ok(())
