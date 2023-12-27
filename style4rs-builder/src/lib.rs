@@ -2,10 +2,7 @@
 //
 use style4rs_util::{tokens_as_class_name, byte_range, css_to_css_with_class_name};
 
-use syn::{
-    Macro,
-    visit::{self, Visit}
-};
+use syn::{ Macro, visit::Visit };
 use time::{
     format_description::FormatItem,
     macros::*,
@@ -52,7 +49,6 @@ impl<'ast> Visit<'ast> for Style4rsBuilder {
                 self.class_styles.insert(class_name, css);
             }
         }
-        visit::visit_macro(self, node)
     }
 }
 
