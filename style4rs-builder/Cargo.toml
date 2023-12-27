@@ -4,9 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-proc-macro2 = { version = "*", features = ["proc-macro", "span-locations"] }
+proc-macro2 = { version = "*", features = ["span-locations"] }
 style4rs = { path = "../style4rs", version = "*" }
 style4rs-util = { path = "../style4rs-util", version = "*" }
-syn = { version = "*", features = ["extra-traits", "full", "visit"] }
+syn = { version = "*", features = [ "full", "visit" ] }
 time = { version = "*", features = ["formatting", "local-offset", "macros"] }
 walkdir = "*"
