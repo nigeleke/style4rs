@@ -31,17 +31,23 @@ impl<'ast> Visit<'ast> for Style4rsBuilder {
     fn visit_macro(&mut self, node: &'ast Macro) {
         if let Some(ident) = node.path.get_ident() {
             if *ident == "style" || *ident == "style_str" {
+                for token in node.tokens.clone().into_iter() {
+                    println!("visit_macro {:?}", token);
+                }
                 let tokens = &node.tokens;
                 let class_name = tokens_as_class_name(tokens);
                 let tokens = Vec::from_iter(tokens.clone());
                 let (first_range, last_range) = 
                     if !tokens.is_empty() {
                         let len = tokens.len();
-                        (byte_range(&tokens[0].span()), byte_range(&tokens[len-1].span()))
+                        let x = (byte_range(&tokens[0].span()), byte_range(&tokens[len-1].span()));
+                        println!("visit_macro::range {:?}", x);
+                        x
                     } else {
                         panic!("Style4rsBuilder found invalid or empty style! macro");
                     };
                 let css = self.current_rs_source[first_range.start-1..last_range.end].to_string();
+                println!("visit_macro::css\n{:?}", css);
                 let css = css_to_css_with_class_name(&css, &class_name).unwrap();
                 self.class_styles.insert(class_name, css);
             }
