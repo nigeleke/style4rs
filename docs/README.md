@@ -36,23 +36,29 @@ The reason for this crate's development was because [stylers](https://github.com
 
 If you're choosing between [style4rs](https://nigeleke.github.io/style4rs/) & [stylers](https://github.com/abishekatp/stylers), the following comparision may help:
 
-| .                         | style4rs         | stylers     | .                                                                                                                                                                                                                                                                                                                                                   |
-|---------------------------|------------------|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Rust build                | Stable ✓         | Nightly ☹   |                                                                                                                                                                                                                                                                                                                                                     |
-| Minified CSS              | ✓                | x           |                                                                                                                                                                                                                                                                                                                                                     |
-| __macros__                |                  |             |                                                                                                                                                                                                                                                                                                                                                     |
-| style!                    | ✓                | ✓           |                                                                                                                                                                                                                                                                                                                                                     |
-| style_sheet!              | ✓                | ✓           |                                                                                                                                                                                                                                                                                                                                                     |
-| style_str!                | ✓                | ✓           |                                                                                                                                                                                                                                                                                                                                                     |
-| style_sheet_str!          | ✓                | ✓           |                                                                                                                                                                                                                                                                                                                                                     |
-| css validation            | ✓                | ✓+          | `style4rs` highlights syntactic errors around the entire CSS block (with an error message described by [lightningcss](https://lightningcss.dev/)).<br/>`stylers` highlights errors at their precise line and also provides semantic checks / hints.                                                                                                 |
-| __Misc__                  |                  |             |                                                                                                                                                                                                                                                                                                                                                     |
-| custom `raw_str` function | x                | ✓           | A consequence of not supporting a `raw_str` function is not all valid CSS content is parsable if it conflicts with the rust parsing. E.g. `content: "\hello"` results in compile error, whereas `content: "\\hello"` results in css with `\\` rather than the _rust escaped_ `\`. Unicode escape sequences, such as `content: "\01F44D"` appear ok. |
-| __Specific CSS handling__ |                  |             |                                                                                                                                                                                                                                                                                                                                                     |
-| ::deep                    | Passed-through   | Handled     | The best approach for handling these is to be determined. At this stage, my other projects are unlikely to require this CSS. Feel free to raise an issue / use-case if deemed required.                                                                                                                                                             |
-| @document                 | Passed-through   | Handled     | "                                                                                                                                                                                                                                                                                                                                                   |
-| __Released ?__            |                  |             |                                                                                                                                                                                                                                                                                                                                                     |
-| Release version           | Not in crates.io | 1.0.0-alpha |                                                                                                                                                                                                                                                                                                                                                     |
+|                           | style4rs         | stylers     | Comments |
+|---------------------------|------------------|-------------|----------|
+| Rust build                | Stable ✓         | Nightly ☹   |          |
+| Minified CSS              | ✓                | x           |          |
+| __macros__                |                  |             |          |
+| style!                    | ✓                | ✓           |          |
+| style_sheet!              | ✓                | ✓           |          |
+| style_str!                | ✓                | ✓           |          |
+| style_sheet_str!          | ✓                | ✓           |          |
+| css validation            | ✓                | ✓+          | [1]      |
+| __Misc__                  |                  |             |          |
+| custom `raw_str` function | x                | ✓           | [2]      |
+| __Specific CSS handling__ |                  |             |          |
+| ::deep                    | Passed-through   | Handled     | [3]      |
+| @document                 | Passed-through   | Handled     | [3]      |
+| __Released ?__            |                  |             |          |
+| Release version           | Not in crates.io | 1.0.0-alpha |          |
+
+   1. `style4rs` highlights syntactic errors around the entire CSS block (with an error message described by [lightningcss](https://lightningcss.dev/)).<br/>`stylers` highlights errors at their precise line and also provides semantic checks / hints.                                                           
+   2. A consequence of not supporting a `raw_str` function is not all valid CSS content is parsable if it conflicts with the rust parsing. E.g. `content: "\hello"` results in compile error, whereas `content: "\\hello"` results in css with `\\` rather than the _rust escaped_ `\`. Unicode escape sequences, such as `content: "\01F44D"` appear ok.
+   3. The best approach for handling these is to be determined. At this stage, my other projects are unlikely to require this CSS. Feel free to raise an issue / use-case if deemed required.
+
+
 ## Development
 
 [Nix](https://nixos.org/) can be used to set up a development environment.
