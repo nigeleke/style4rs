@@ -10,7 +10,8 @@ edition = "2021"
 proc_macro = true
 
 [dependencies]
-proc-macro2 = { version = "*", features = ["proc-macro", "span-locations"] }
+proc-macro2 = "*"
 quote = "*"
+regex = "*"
 style4rs-util = { path = "../style4rs-util", version = "*" }
-syn = { version = "*", features = ["full", "visit"] }
+syn = "*"

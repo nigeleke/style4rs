@@ -4,8 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-lightningcss = { version = "1.0.0-alpha.51", features = ["serde", "visitor"] }
-proc-macro2 = { version = "*", features = ["proc-macro"] }
-quote = "*"
-regex = "*"
-selectors = "*"
+lightningcss = { version = "1.0.0-alpha.51", features = ["visitor"] }
+proc-macro2 = "*"
