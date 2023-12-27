@@ -58,7 +58,6 @@ If you're choosing between [style4rs](https://nigeleke.github.io/style4rs/) & [s
    2. A consequence of not supporting a `raw_str` function is not all valid CSS content is parsable if it conflicts with the rust parsing. E.g. `content: "\hello"` results in compile error, whereas `content: "\\hello"` results in css with `\\` rather than the _rust escaped_ `\`. Unicode escape sequences, such as `content: "\01F44D"` appear ok.
    3. The best approach for handling these is to be determined. At this stage, my other projects are unlikely to require this CSS. Feel free to raise an issue / use-case if deemed required.
 
-
 ## Development
 
 [Nix](https://nixos.org/) can be used to set up a development environment.
