@@ -1,7 +1,11 @@
 [package]
 name = "style4rs-test"
 version.workspace = true
+description = "Independent tests for macros and builder"
+repository.workspace = true
+authors.workspace = true
 edition.workspace = true
+license.workspace = true
 
 [dependencies]
 style4rs = { path = "../style4rs" }

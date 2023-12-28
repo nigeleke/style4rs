@@ -1,7 +1,7 @@
 [package]
 name = "style4rs-builder"
 version.workspace = true
-description.workspace = true
+description = "Main.css builder for style4rs macros"
 repository.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -12,4 +12,4 @@ proc-macro2 = { workspace = true, features = ["span-locations"] }
 syn = { workspace = true, features = [ "full", "visit" ] }
 time = { workspace = true, features = ["formatting", "local-offset", "macros"] }
 walkdir.workspace = true
-style4rs-util = { path = "../style4rs-util" }
+style4rs-util = { path = "../style4rs-util", version = "0.1.0" }

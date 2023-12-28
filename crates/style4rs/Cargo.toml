@@ -1,7 +1,7 @@
 [package]
 name = "style4rs"
 version.workspace = true
-description.workspace = true
+description = "Scoped CSS for Rust web frameworks like Leptos"
 repository.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -15,4 +15,4 @@ proc-macro2.workspace = true
 quote.workspace = true
 regex.workspace = true
 syn.workspace = true
-style4rs-util = { path = "../style4rs-util" }
+style4rs-util = { path = "../style4rs-util", version = "0.1.0" }
