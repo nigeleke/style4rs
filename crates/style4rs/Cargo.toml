@@ -15,4 +15,4 @@ proc-macro2.workspace = true
 quote.workspace = true
 regex.workspace = true
 syn.workspace = true
-style4rs-util = { path = "../style4rs-util", version = "0.1.0" }
+style4rs-util = { path = "../style4rs-util", version = "0.0.1" }
