@@ -1,8 +1,8 @@
 [package]
 name = "style4rs-util"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
 
 [dependencies]
-lightningcss = { version = "1.0.0-alpha.51", features = ["visitor"] }
-proc-macro2 = "*"
+lightningcss = { workspace = true, features = ["visitor"] }
+proc-macro2.workspace = true
