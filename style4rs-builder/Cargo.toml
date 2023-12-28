@@ -1,6 +1,9 @@
 [package]
 name = "style4rs-builder"
 version.workspace = true
+description.workspace = true
+repository.workspace = true
+authors.workspace = true
 edition.workspace = true
 license.workspace = true
 
@@ -9,5 +12,4 @@ proc-macro2 = { workspace = true, features = ["span-locations"] }
 syn = { workspace = true, features = [ "full", "visit" ] }
 time = { workspace = true, features = ["formatting", "local-offset", "macros"] }
 walkdir.workspace = true
-style4rs = { path = "../style4rs", version = "*" }
-style4rs-util = { path = "../style4rs-util", version = "*" }
+style4rs-util = { path = "../style4rs-util" }
