@@ -1,5 +1,3 @@
-// Tested in style4rs-test module...
-//
 use style4rs_util::{tokens_as_class_name, css_to_css_with_class_name};
 
 use proc_macro2::LineColumn;
