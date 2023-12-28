@@ -1,12 +1,13 @@
 [package]
 name = "style4rs-builder"
-version = "0.1.0"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
 
 [dependencies]
-proc-macro2 = { version = "*", features = ["span-locations"] }
+proc-macro2 = { workspace = true, features = ["span-locations"] }
+syn = { workspace = true, features = [ "full", "visit" ] }
+time = { workspace = true, features = ["formatting", "local-offset", "macros"] }
+walkdir.workspace = true
 style4rs = { path = "../style4rs", version = "*" }
 style4rs-util = { path = "../style4rs-util", version = "*" }
-syn = { version = "*", features = [ "full", "visit" ] }
-time = { version = "*", features = ["formatting", "local-offset", "macros"] }
-walkdir = "*"

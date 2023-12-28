@@ -6,3 +6,20 @@ members = [
 	"style4rs-util",
 	"style4rs-test",
 ]
+
+[workspace.package]
+version = "0.1.0"
+description = "Scoped CSS for Rust web frameworks like Leptos"
+license = "MIT"
+repository = "https://github.com/nigeleke/style4rs"
+authors = ["Nigel Eke"]
+edition = "2021"
+
+[workspace.dependencies]
+lightningcss = "1.0.0-alpha.51"
+proc-macro2 = "1.0"
+quote = "1.0"
+regex = "1.10"
+syn = "2.0"
+time = "0.3"
+walkdir = "2.4"
