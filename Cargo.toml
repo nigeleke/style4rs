@@ -1,11 +1,6 @@
 [workspace]
 resolver = "2"
-members = [
- 	"style4rs",
-	"style4rs-builder",
-	"style4rs-util",
-	"style4rs-test",
-]
+members = [ "crates/*" ]
 
 [workspace.package]
 version = "0.1.0"
