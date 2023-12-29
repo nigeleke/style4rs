@@ -1,7 +1,7 @@
 //! Tests attributed to [Abishek P](https://github.com/abishekatp) from the [stylers](https://github.com/abishekatp/stylers) repository.
 //!
 
-use style4rs::*;
+use style4rs_macros::*;
 
 // Note: to check why test cases are failing we can use the text compare tools to compare and see the differences between left and right values of a test case
 // Ref: https://www.w3schools.com/cssref/css_selectors.php

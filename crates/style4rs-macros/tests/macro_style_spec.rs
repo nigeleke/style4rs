@@ -1,4 +1,4 @@
-use style4rs::*;
+use style4rs_macros::*;
 
 #[test]
 fn it_can_be_invoked() {

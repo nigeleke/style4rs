@@ -1,4 +1,4 @@
-use style4rs::*;
+use style4rs_macros::*;
 
 pub fn style_class_name() -> String {
     let class_name = style!{

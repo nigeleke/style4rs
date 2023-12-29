@@ -2,7 +2,7 @@
 //!
 //! Ref: https://www.w3schools.com/cssref/css_selectors.php
 
-use style4rs::*;
+use style4rs_macros::*;
 
 #[test]
 fn test_1() {

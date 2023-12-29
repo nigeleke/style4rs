@@ -1,7 +1,7 @@
 [package]
-name = "style4rs-test"
+name = "style4rs"
 version.workspace = true
-description = "Independent tests for macros and builder"
+description = "Scoped CSS for Rust web frameworks like Leptos"
 repository.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -9,6 +9,4 @@ license.workspace = true
 
 [dependencies]
 style4rs-macros = { path = "../style4rs-macros" }
-
-[build-dependencies]
 style4rs-builder = { path = "../style4rs-builder" }

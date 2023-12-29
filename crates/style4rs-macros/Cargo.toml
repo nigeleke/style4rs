@@ -1,5 +1,5 @@
 [package]
-name = "style4rs"
+name = "style4rs-macros"
 version.workspace = true
 description = "Scoped CSS for Rust web frameworks like Leptos"
 repository.workspace = true
