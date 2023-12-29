@@ -27,7 +27,7 @@ The reason for this crate's development was because [stylers](https://github.com
 
 * [Site](https://nigeleke.github.io/style4rs)
 * [GitHub](https://github.com/nigeleke/style4rs)
-* [Crates](https://nigeleke.github.io/style4rs/core/index.html)
+* [API](https://nigeleke.github.io/style4rs/api/style4rs/index.html)
 * [Coverage Report](https://nigeleke.github.io/style4rs/coverage/index.html)
 
 ## Alternatives
