@@ -25,3 +25,5 @@ pub fn MyStyleStrComponent() -> impl IntoView {
         </div>
     }
 }
+
+fn main() {}

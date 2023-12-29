@@ -10,3 +10,7 @@ license.workspace = true
 [dependencies]
 style4rs-macros = { path = "../style4rs-macros" }
 style4rs-builder = { path = "../style4rs-builder" }
+
+[dev-dependencies]
+leptos = { version = "0.5" }
+
