@@ -1,0 +1,7 @@
+[package]
+name = "style4rs_example"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+leptos = { version = "0.5", features = ["nightly"] }
