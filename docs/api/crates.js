@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["style4rs","style4rs_builder","style4rs_macros","style4rs_test","style4rs_util"];

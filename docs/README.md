@@ -21,39 +21,38 @@ This crate owes its existence to the [stylers](https://github.com/abishekatp/sty
 
 ## Background
 
-This is **Work In Progress** and, at this stage, currently being tested in another project.
-
-The reason for this crate's development was because [stylers](https://github.com/abishekatp/stylers) has a reliance on the [Rust](https://www.rust-lang.org/) `nightly` build. This bugged me and I wanted to see if an alternate approach was feasible. The result is this crate.
+The reason for this crate's development was because [stylers](https://github.com/abishekatp/stylers) has a reliance on the [Rust](https://www.rust-lang.org/) `nightly` build. This bugged me and I wanted to see if an alternate approach was feasible.
 
 ## Documentation
 
 * [Site](https://nigeleke.github.io/style4rs)
 * [GitHub](https://github.com/nigeleke/style4rs)
-* [Crates](https://nigeleke.github.io/style4rs/core/index.html)
+* [API](https://nigeleke.github.io/style4rs/api/style4rs/index.html)
 * [Coverage Report](https://nigeleke.github.io/style4rs/coverage/index.html)
 
-## Comparison
+## Alternatives
 
-If you're choosing between [style4rs](https://nigeleke.github.io/style4rs/) & [stylers](https://github.com/abishekatp/stylers), the following comparision may help:
+If you're choosing between [style4rs](https://nigeleke.github.io/style4rs/) & [stylers](https://github.com/abishekatp/stylers), the following comparision may help. Also, an additional crate [styled](https://docs.rs/styled/latest/styled/) exists, which requires [stylist](https://docs.rs/stylist/latest/stylist/). At the time of writing[0] [stylist](https://docs.rs/stylist/latest/stylist/) depends on the nightly build too; they haven't been analysed further.
 
-|                           | style4rs         | stylers     | Comments |
-|---------------------------|------------------|-------------|----------|
-| Rust build                | Stable ✓         | Nightly ☹   |          |
-| Minified CSS              | ✓                | x           |          |
-| __macros__                |                  |             |          |
-| style!                    | ✓                | ✓           |          |
-| style_sheet!              | ✓                | ✓           |          |
-| style_str!                | ✓                | ✓           |          |
-| style_sheet_str!          | ✓                | ✓           |          |
-| css validation            | ✓                | ✓+          | [1]      |
-| __Misc__                  |                  |             |          |
-| custom `raw_str` function | x                | ✓           | [2]      |
-| __Specific CSS handling__ |                  |             |          |
-| ::deep                    | Passed-through   | Handled     | [3]      |
-| @document                 | Passed-through   | Handled     | [3]      |
-| __Released ?__            |                  |             |          |
-| Release version           | Not in crates.io | 1.0.0-alpha |          |
+|                           | style4rs         | stylers     | styled / stylist | Comments |
+|---------------------------|------------------|-------------|------------------|----------|
+| Rust build                | Stable ✓         | Nightly ☹   | Nightly ☹        |          |
+| Minified CSS              | ✓                | x           | ?                |          |
+| __macros__                |                  |             |                  |          |
+| style!                    | ✓                | ✓           | ✓                |          |
+| style_sheet!              | ✓                | ✓           | ?                |          |
+| style_str!                | ✓                | ✓           | ?                |          |
+| style_sheet_str!          | ✓                | ✓           | ?                |          |
+| css validation            | ✓                | ✓+          | ?                | [1]      |
+| __Misc__                  |                  |             |                  |          |
+| custom `raw_str` function | x                | ✓           | ?                | [2]      |
+| __Specific CSS handling__ |                  |             |                  |          |
+| ::deep                    | Passed-through   | Handled     | ?                | [3]      |
+| @document                 | Passed-through   | Handled     | ?                | [3]      |
+| __Released ?__            |                  |             |                  |          |
+| Release version           | Not in crates.io | 1.0.0-alpha | 0.2.0 / 0.13.0   |          |
 
+   0. 29-Dec-2023
    1. `style4rs` highlights syntactic errors around the entire CSS block (with an error message described by [lightningcss](https://lightningcss.dev/)).<br/>`stylers` highlights errors at their precise line and also provides semantic checks / hints.                                                           
    2. A consequence of not supporting a `raw_str` function is not all valid CSS content is parsable if it conflicts with the rust parsing. E.g. `content: "\hello"` results in compile error, whereas `content: "\\hello"` results in css with `\\` rather than the _rust escaped_ `\`. Unicode escape sequences, such as `content: "\01F44D"` appear ok.
    3. The best approach for handling these is to be determined. At this stage, my other projects are unlikely to require this CSS. Feel free to raise an issue / use-case if deemed required.
@@ -71,7 +70,7 @@ Tests in this crate are derived from [stylers](https://github.com/abishekatp/sty
 
 ## Usage
 
-See `style4rs/tests/macro_foobar_spec` and `style4rs-test/build.rs`.
+See `style4rs-macros/tests/macro_foobar_spec` and `style4rs-test/build.rs`.
 
 `Style4rsBuilder::build()` transforms the __style4rs__ macros to the project's `$OUTDIR/style4rs/main.css`.
 
@@ -87,7 +86,7 @@ edition = "2021"
 style4rs = { version = "*" }
 
 [build-dependencies]
-style4rs-builder = { version = "*" }
+style4rs = { version = "*" }
 ```
 
 ### build.rs
@@ -95,7 +94,7 @@ style4rs-builder = { version = "*" }
 See [Build Scripts - The Cargo Book](https://doc.rust-lang.org/cargo/reference/build-scripts.html).
 
 ```rust
-use style4rs_builder::*;
+use style4rs::Style4rsBuilder;
 
 fn main() {
     Style4rsBuilder::build().ok();
