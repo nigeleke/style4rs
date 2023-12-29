@@ -10,3 +10,4 @@ license.workspace = true
 [dependencies]
 lightningcss = { workspace = true, features = ["visitor"] }
 proc-macro2.workspace = true
+regex.workspace = true

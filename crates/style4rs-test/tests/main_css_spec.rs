@@ -21,12 +21,36 @@ fn style_macro_class_names_are_in_the_resultant_main_css() {
 
 #[test]
 #[cfg(not(tarpaulin))]
-fn style_str_macro_class_names_are_in_the_resultant_main_css() {
+fn style_str_macro_class_names_are_not_in_the_resultant_main_css() {
     let target_path = env::var_os("OUT_DIR").expect("Expected $env::OUT_DIR");
     let target_path = Path::new(&target_path)
         .join("style4rs")
         .join("main.css");
     let main_css = fs::read_to_string(target_path).unwrap();
     let styled_class_name = &style_str_class_name();
+    assert!(main_css.find(styled_class_name).is_none());
+}
+
+#[test]
+#[cfg(not(tarpaulin))]
+fn style_sheet_macro_class_names_are_in_the_resultant_main_css() {
+    let target_path = env::var_os("OUT_DIR").expect("Expected $env::OUT_DIR");
+    let target_path = Path::new(&target_path)
+        .join("style4rs")
+        .join("main.css");
+    let main_css = fs::read_to_string(target_path).unwrap();
+    let styled_class_name = &style_sheet_class_name();
     assert!(main_css.find(styled_class_name).is_some());
+}
+
+#[test]
+#[cfg(not(tarpaulin))]
+fn style_sheet_str_macro_class_names_are_not_in_the_resultant_main_css() {
+    let target_path = env::var_os("OUT_DIR").expect("Expected $env::OUT_DIR");
+    let target_path = Path::new(&target_path)
+        .join("style4rs")
+        .join("main.css");
+    let main_css = fs::read_to_string(target_path).unwrap();
+    let styled_class_name = &style_sheet_str_class_name();
+    assert!(main_css.find(styled_class_name).is_none());
 }

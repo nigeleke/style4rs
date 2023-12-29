@@ -1,4 +1,4 @@
-use style4rs_util::{tokens_as_class_name, css_to_css_with_class_name};
+use style4rs_util::{css_to_css_with_class_name, file_path_tokens_to_class_name_and_css, tokens_as_class_name};
 
 use proc_macro2::LineColumn;
 use syn::{ Macro, visit::Visit };
@@ -24,7 +24,7 @@ struct FileVisitor {
 impl<'ast> Visit<'ast> for FileVisitor {
     fn visit_macro(&mut self, node: &'ast Macro) {
         if let Some(ident) = node.path.get_ident() {
-            if *ident == "style" || *ident == "style_str" {
+            if *ident == "style" {
                 let tokens = &node.tokens;
                 let class_name = tokens_as_class_name(tokens);
                 let tokens = Vec::from_iter(tokens.clone());
@@ -37,6 +37,11 @@ impl<'ast> Visit<'ast> for FileVisitor {
                         panic!("Style4rsBuilder found invalid or empty macro");
                     };
                 let css = self.extract_source(start, end);
+                let css = css_to_css_with_class_name(&css, &class_name).unwrap();
+                self.class_styles.insert(class_name, css);
+            } else if *ident == "style_sheet" {
+                let tokens = &node.tokens;
+                let (class_name, css) = file_path_tokens_to_class_name_and_css(tokens).unwrap();
                 let css = css_to_css_with_class_name(&css, &class_name).unwrap();
                 self.class_styles.insert(class_name, css);
             }
