@@ -50,4 +50,4 @@ jobs:
           git checkout main
           git merge develop
           cargo install cargo-workspaces
-          cargo workspaces version --allow-branch main --yes patch
+          cargo workspaces -v version --allow-branch main --yes patch
