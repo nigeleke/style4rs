@@ -1,5 +1,5 @@
-//! Tests attributed to [Abishek P](https://github.com/abishekatp) from the [stylers](https://github.com/abishekatp/stylers) repository.
-//!
+/// Tests attributed to [Abishek P](https://github.com/abishekatp) from the [stylers](https://github.com/abishekatp/stylers) repository.
+///
 
 use style4rs_macros::*;
 

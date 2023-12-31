@@ -1,6 +1,6 @@
-//! Tests attributed to [Abishek P](https://github.com/abishekatp) from the [stylers](https://github.com/abishekatp/stylers) repository.
-//!
-//! Ref: https://www.w3schools.com/cssref/css_selectors.php
+/// Tests attributed to [Abishek P](https://github.com/abishekatp) from the [stylers](https://github.com/abishekatp/stylers) repository.
+///
+/// Ref: https://www.w3schools.com/cssref/css_selectors.php
 
 use style4rs_macros::*;
 

@@ -1,5 +1,5 @@
-use style4rs_builder::*;
+use style4rs_builder::builder::Builder;
 
 fn main() {
-    Style4rsBuilder::build().ok();
+    Builder::new().build().ok();
 }

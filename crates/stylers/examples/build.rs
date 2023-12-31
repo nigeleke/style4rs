@@ -1,4 +1,4 @@
-use style4rs::Style4rsBuilder;
+use style4rs::Builder;
 
 fn main() {
     // ++
@@ -20,7 +20,7 @@ fn main() {
 
 
     // "Standard" `build.rs` call...
-    Style4rsBuilder::build().ok();
+    Builder::new().build().ok();
 
     
     // ++
