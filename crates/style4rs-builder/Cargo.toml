@@ -1,6 +1,6 @@
 [package]
 name = "style4rs-builder"
-version.workspace = true
+version = "0.0.2"
 description = "Main.css builder for style4rs macros"
 repository.workspace = true
 authors.workspace = true

@@ -1,6 +1,6 @@
 [package]
 name = "style4rs"
-version.workspace = true
+version = "0.0.2"
 description = "Scoped CSS for Rust web frameworks like Leptos"
 repository.workspace = true
 authors.workspace = true
@@ -8,9 +8,8 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
-style4rs-macros = { path = "../style4rs-macros" }
-style4rs-builder = { path = "../style4rs-builder" }
+style4rs-macros = { path = "../style4rs-macros", version = "0.0.2" }
+style4rs-builder = { path = "../style4rs-builder", version = "0.0.2" }
 
 [dev-dependencies]
 leptos = { version = "0.5" }
-
