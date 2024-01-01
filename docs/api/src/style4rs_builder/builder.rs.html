@@ -123,6 +123,12 @@
 <a href="#123" id="123">123</a>
 <a href="#124" id="124">124</a>
 <a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span><span class="kw">crate</span>::error::Error;
 <span class="kw">use </span><span class="kw">crate</span>::file_visitor::FileVisitor;
 <span class="kw">use </span><span class="kw">crate</span>::result::Result;
@@ -240,8 +246,14 @@
     <span class="doccomment">/// Build the `style4rs::style` and `style4rs::style_sheet` macro invocation in all `.rs` files into the required output file.
     /// The output file will contain all css with component classes inserted appropriately.
     /// `build()` will panic if the input folder is not provided (or exists), or the outpur file path is not provided.
+    /// `build()` will re-run if any files under the inp-folder changes, or if either environment variables `CARGO_MANIFEST_DIR`
+    /// or `OUT_DIR` change.
     ///
     </span><span class="kw">pub fn </span>build(<span class="kw-2">&amp;mut </span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+        <span class="macro">println!</span>(<span class="string">&quot;cargo:rerun-if-changed=src/&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;cargo:rerun-if-env-changed=CARGO_MANIFEST_DIR&quot;</span>);
+        <span class="macro">println!</span>(<span class="string">&quot;cargo:rerun-if-env-changed=OUT_DIR&quot;</span>);
+    
         <span class="kw">let </span>css = <span class="self">self</span>.extract_css_from_macros()<span class="question-mark">?</span>;
         <span class="kw">_ </span>= <span class="self">self</span>.write_to_main_css(<span class="kw-2">&amp;</span>css);
         <span class="prelude-val">Ok</span>(())
