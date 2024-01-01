@@ -1,6 +1,6 @@
 [package]
 name = "style4rs-util"
-version = "0.0.2"
+version = "0.0.3"
 description = "Commmon functions for style4rs macros and builder"
 repository.workspace = true
 authors.workspace = true
