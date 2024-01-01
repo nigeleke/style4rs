@@ -70,7 +70,7 @@
 //! use std::path::Path;
 //! Builder::new()
 //!    .using_in_folder(Path::new("input_path"))
-//!    .using_out_file(Path::new("output_path/target_file.css"))
+//!    .using_out_file(Path::new("../../target/style4rs-example/file.css"))
 //!    .build()
 //!    .ok();
 //! ```

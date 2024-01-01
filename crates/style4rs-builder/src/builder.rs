@@ -115,8 +115,14 @@ impl Builder {
     /// Build the `style4rs::style` and `style4rs::style_sheet` macro invocation in all `.rs` files into the required output file.
     /// The output file will contain all css with component classes inserted appropriately.
     /// `build()` will panic if the input folder is not provided (or exists), or the outpur file path is not provided.
+    /// `build()` will re-run if any files under the inp-folder changes, or if either environment variables `CARGO_MANIFEST_DIR`
+    /// or `OUT_DIR` change.
     ///
     pub fn build(&mut self) -> Result<()> {
+        println!("cargo:rerun-if-changed=src/");
+        println!("cargo:rerun-if-env-changed=CARGO_MANIFEST_DIR");
+        println!("cargo:rerun-if-env-changed=OUT_DIR");
+    
         let css = self.extract_css_from_macros()?;
         _ = self.write_to_main_css(&css);
         Ok(())
