@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Style4rsBuilder"]};
+window.SIDEBAR_ITEMS = {"mod":["builder"]};

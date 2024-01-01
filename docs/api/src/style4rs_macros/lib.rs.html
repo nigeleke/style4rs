@@ -60,14 +60,32 @@
 <a href="#60" id="60">60</a>
 <a href="#61" id="61">61</a>
 <a href="#62" id="62">62</a>
-</pre></div><pre class="rust"><code><span class="kw">use </span>style4rs_util::{file_path_tokens_to_class_name_and_css, tokens_to_class_name_and_css};
+<a href="#63" id="63">63</a>
+<a href="#64" id="64">64</a>
+<a href="#65" id="65">65</a>
+<a href="#66" id="66">66</a>
+<a href="#67" id="67">67</a>
+<a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
+<a href="#70" id="70">70</a>
+<a href="#71" id="71">71</a>
+<a href="#72" id="72">72</a>
+<a href="#73" id="73">73</a>
+<a href="#74" id="74">74</a>
+</pre></div><pre class="rust"><code><span class="doccomment">//! style4s-macros provides the macros.
+
+</span><span class="kw">use </span>style4rs_util::{
+    file_path_tokens_to_class_name_and_css,
+    tokens_to_class_name_and_css
+};
 
 <span class="kw">use </span>proc_macro::TokenStream;
 <span class="kw">use </span>proc_macro2::{TokenStream <span class="kw">as </span>TokenStream2};
 <span class="kw">use </span>quote::<span class="kw-2">*</span>;
 <span class="kw">use </span>syn::Error;
 
-<span class="attr">#[proc_macro]
+<span class="doccomment">/// style! will return the unique class name for the css passed into it.
+</span><span class="attr">#[proc_macro]
 </span><span class="kw">pub fn </span>style(tokens: TokenStream) -&gt; TokenStream {
     <span class="kw">let </span>tokens: TokenStream2 = tokens.into();
     <span class="kw">match </span>tokens_to_class_name_and_css(<span class="kw-2">&amp;</span>tokens) {
@@ -81,7 +99,9 @@
     }
 }
 
-<span class="attr">#[proc_macro]
+<span class="doccomment">/// style_str! will return the unique class name for the css passed into it,
+/// together with the minimised css styling.
+</span><span class="attr">#[proc_macro]
 </span><span class="kw">pub fn </span>style_str(tokens: TokenStream) -&gt; TokenStream {
     <span class="kw">let </span>tokens: TokenStream2 = tokens.into();
     <span class="kw">match </span>tokens_to_class_name_and_css(<span class="kw-2">&amp;</span>tokens) {
@@ -95,7 +115,9 @@
     }
 }
 
-<span class="attr">#[proc_macro]
+<span class="doccomment">/// style_sheet! will return the unique class name for the css contained in
+/// the given file.
+</span><span class="attr">#[proc_macro]
 </span><span class="kw">pub fn </span>style_sheet(tokens: TokenStream) -&gt; TokenStream {
     <span class="kw">let </span>tokens: TokenStream2 = tokens.into();
     <span class="kw">match </span>file_path_tokens_to_class_name_and_css(<span class="kw-2">&amp;</span>tokens) {
@@ -109,7 +131,9 @@
     }
 }
 
-<span class="attr">#[proc_macro]
+<span class="doccomment">/// style_sheet_str! will return the unique class name for the css contained in
+/// the given file, together with the minimised css.
+</span><span class="attr">#[proc_macro]
 </span><span class="kw">pub fn </span>style_sheet_str(tokens: TokenStream) -&gt; TokenStream {
     <span class="kw">let </span>tokens: TokenStream2 = tokens.into();
     <span class="kw">match </span>file_path_tokens_to_class_name_and_css(<span class="kw-2">&amp;</span>tokens) {

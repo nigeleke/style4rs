@@ -72,7 +72,7 @@ Tests in this crate are derived from [stylers](https://github.com/abishekatp/sty
 
 See `style4rs-macros/tests/macro_foobar_spec` and `style4rs-test/build.rs`.
 
-`Style4rsBuilder::build()` transforms the __style4rs__ macros to the project's `$OUTDIR/style4rs/main.css`.
+`Builder::build()` transforms the __style4rs__ macros to the project's `$OUTDIR/style4rs/main.css`.
 
 ### Cargo.toml
 
@@ -94,9 +94,9 @@ style4rs = { version = "*" }
 See [Build Scripts - The Cargo Book](https://doc.rust-lang.org/cargo/reference/build-scripts.html).
 
 ```rust
-use style4rs::Style4rsBuilder;
+use style4rs::Builder;
 
 fn main() {
-    Style4rsBuilder::build().ok();
+    Builder::build().ok();
 }
 ```

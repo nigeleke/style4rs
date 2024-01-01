@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"macro":["style","style_sheet","style_sheet_str","style_str"],"struct":["Style4rsBuilder"]};
+window.SIDEBAR_ITEMS = {"macro":["style","style_sheet","style_sheet_str","style_str"],"struct":["Builder"]};

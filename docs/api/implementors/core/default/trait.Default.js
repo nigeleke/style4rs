@@ -1,3 +1,3 @@
 (function() {var implementors = {
-"style4rs_builder":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.74.1/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"struct\" href=\"style4rs_builder/struct.Style4rsBuilder.html\" title=\"struct style4rs_builder::Style4rsBuilder\">Style4rsBuilder</a>"]]
+"style4rs_builder":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.74.1/core/default/trait.Default.html\" title=\"trait core::default::Default\">Default</a> for <a class=\"struct\" href=\"style4rs_builder/builder/struct.Builder.html\" title=\"struct style4rs_builder::builder::Builder\">Builder</a>"]]
 };if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
