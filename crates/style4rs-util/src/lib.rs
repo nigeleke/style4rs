@@ -1,3 +1,9 @@
+//! Style4rs-util provides common classes used by [style4rs-builder](../style4rs_builder#)
+//! and [style4rs-macros](../style4rs_macros/#).
+//!
+//! None of the functions are intended for public use.
+//!
+
 use lightningcss::{
     selector::{Combinator, Component, PseudoClass, Selector},
     stylesheet::{StyleSheet, ParserOptions, PrinterOptions},
