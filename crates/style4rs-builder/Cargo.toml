@@ -12,4 +12,4 @@ proc-macro2 = { workspace = true, features = ["span-locations"] }
 syn = { workspace = true, features = [ "full", "visit" ] }
 time = { workspace = true, features = ["formatting", "local-offset", "macros"] }
 walkdir.workspace = true
-style4rs-util = { path = "../style4rs-util", version = "0.0.1" }
+style4rs-util = { path = "../style4rs-util", version = "0.0.2" }
