@@ -65,14 +65,21 @@ Running `> nix develop --impure` will set up [Rust](https://www.rust-lang.org/) 
 
 The core code uses the [LightningCSS Parser](https://lightningcss.dev/).
 
-Tests in this crate are derived from [stylers](https://github.com/abishekatp/stylers) (and modified to reflect CSS constructs supported differently here).
-
+Tests in this crate are derived from [stylers](https://github.com/abishekatp/stylers) (and modified to reflect CSS constructs supported differently here). Note that the low coverage stats are misleading; much of the testing relies on compile time and build time invocation and is not instrumented.
 
 ## Usage
 
-See `style4rs-macros/tests/macro_foobar_spec` and `style4rs-test/build.rs`.
+### Macros
 
-`Builder::build()` transforms the __style4rs__ macros to the project's `$OUTDIR/style4rs/main.css`.
+See [style4rs macro documentation](https://nigeleke.github.io/style4rs/api/style4rs/index.html#macros).
+
+### Builder
+
+Create a `build.rs` file to merge all `style!` and `style_sheet!` css to the target css file.
+
+See [style4rs builder documentation](https://nigeleke.github.io/style4rs/api/style4rs/index.html#builder).
+
+See [Build Scripts - The Cargo Book](https://doc.rust-lang.org/cargo/reference/build-scripts.html) for further information about `build.rs`.
 
 ### Cargo.toml
 
@@ -87,16 +94,4 @@ style4rs = { version = "*" }
 
 [build-dependencies]
 style4rs = { version = "*" }
-```
-
-### build.rs
-
-See [Build Scripts - The Cargo Book](https://doc.rust-lang.org/cargo/reference/build-scripts.html).
-
-```rust
-use style4rs::Builder;
-
-fn main() {
-    Builder::build().ok();
-}
 ```
