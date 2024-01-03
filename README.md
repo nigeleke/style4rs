@@ -6,6 +6,8 @@
 [![Coverage](https://img.shields.io/codecov/c/github/nigeleke/style4rs?style=plastic)](https://codecov.io/gh/nigeleke/style4rs)
 ![Version](https://img.shields.io/github/v/tag/nigeleke/style4rs?style=plastic)
 
+[Site](https://nigeleke.github.io/style4rs) | [GitHub](https://github.com/nigeleke/style4rs) | [API](https://nigeleke.github.io/style4rs/api/style4rs/index.html) | [Coverage Report](https://nigeleke.github.io/style4rs/coverage/index.html)
+
 * Scoped CSS for Rust web frameworks like Leptos.
   
 | Macro              | Description                                                                       |
@@ -22,13 +24,6 @@ This crate owes its existence to the [stylers](https://github.com/abishekatp/sty
 ## Background
 
 The reason for this crate's development was because [stylers](https://github.com/abishekatp/stylers) has a reliance on the [Rust](https://www.rust-lang.org/) `nightly` build. This bugged me and I wanted to see if an alternate approach was feasible.
-
-## Documentation
-
-* [Site](https://nigeleke.github.io/style4rs)
-* [GitHub](https://github.com/nigeleke/style4rs)
-* [API](https://nigeleke.github.io/style4rs/api/style4rs/index.html)
-* [Coverage Report](https://nigeleke.github.io/style4rs/coverage/index.html)
 
 ## Alternatives
 
