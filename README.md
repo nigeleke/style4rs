@@ -6,9 +6,9 @@
 [![Coverage](https://img.shields.io/codecov/c/github/nigeleke/style4rs?style=plastic)](https://codecov.io/gh/nigeleke/style4rs)
 ![Version](https://img.shields.io/github/v/tag/nigeleke/style4rs?style=plastic)
 
-[Site](https://nigeleke.github.io/style4rs) | [GitHub](https://github.com/nigeleke/style4rs) | [API](https://nigeleke.github.io/style4rs/api/style4rs/index.html) | [Coverage Report](https://nigeleke.github.io/style4rs/coverage/index.html)
+  [Site](https://nigeleke.github.io/style4rs) \| [GitHub](https://github.com/nigeleke/style4rs) \| [API](https://nigeleke.github.io/style4rs/api/style4rs/index.html) \| [Coverage Report](https://nigeleke.github.io/style4rs/coverage/index.html)
 
-* Scoped CSS for Rust web frameworks like Leptos.
+Scoped CSS for Rust web frameworks like Leptos.
   
 | Macro              | Description                                                                       |
 |--------------------|-----------------------------------------------------------------------------------|
