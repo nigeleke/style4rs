@@ -1,3 +1,0 @@
-(function() {var implementors = {
-"style4rs_builder":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.74.1/core/panic/unwind_safe/trait.RefUnwindSafe.html\" title=\"trait core::panic::unwind_safe::RefUnwindSafe\">RefUnwindSafe</a> for <a class=\"struct\" href=\"style4rs_builder/builder/struct.Builder.html\" title=\"struct style4rs_builder::builder::Builder\">Builder</a>",1,["style4rs_builder::builder::Builder"]]]
-};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
