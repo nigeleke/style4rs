@@ -27,7 +27,7 @@ The reason for this crate's development was because [stylers](https://github.com
 
 ## Alternatives
 
-If you're choosing between [style4rs](https://nigeleke.github.io/style4rs/) & [stylers](https://github.com/abishekatp/stylers), the following comparision may help. Also, an additional crate [styled](https://docs.rs/styled/latest/styled/) exists, which requires [stylist](https://docs.rs/stylist/latest/stylist/). At the time of writing[0] [stylist](https://docs.rs/stylist/latest/stylist/) depends on the nightly build too; they haven't been analysed further.
+If you're choosing between [style4rs](https://nigeleke.github.io/style4rs/) & [stylers](https://github.com/abishekatp/stylers), the following comparision may help. Also, an additional crate [styled](https://docs.rs/styled/latest/styled/) exists, which requires [stylist](https://docs.rs/stylist/latest/stylist/). At the time of writing[1] [stylist](https://docs.rs/stylist/latest/stylist/) depends on the nightly build too; they haven't been analysed further.
 
 |                           | style4rs         | stylers     | styled / stylist | Comments |
 |---------------------------|------------------|-------------|------------------|----------|
@@ -38,12 +38,12 @@ If you're choosing between [style4rs](https://nigeleke.github.io/style4rs/) & [s
 | style_sheet!              | ✓                | ✓           | ?                |          |
 | style_str!                | ✓                | ✓           | ?                |          |
 | style_sheet_str!          | ✓                | ✓           | ?                |          |
-| css validation            | ✓                | ✓+          | ?                | [1]      |
+| css validation            | ✓                | ✓+          | ?                | [2]      |
 | __Misc__                  |                  |             |                  |          |
-| custom `raw_str` function | x                | ✓           | ?                | [2]      |
+| custom `raw_str` function | x                | ✓           | ?                | [3]      |
 | __Specific CSS handling__ |                  |             |                  |          |
-| ::deep                    | Passed-through   | Handled     | ?                | [3]      |
-| @document                 | Passed-through   | Handled     | ?                | [3]      |
+| ::deep                    | Passed-through   | Handled     | ?                | [4]      |
+| @document                 | Passed-through   | Handled     | ?                | [4]      |
 | __Released ?__            |                  |             |                  |          |
 | Release version           | Not in crates.io | 1.0.0-alpha | 0.2.0 / 0.13.0   |          |
 
