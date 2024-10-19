@@ -8,7 +8,9 @@
 
   [Site](https://nigeleke.github.io/style4rs) \| [GitHub](https://github.com/nigeleke/style4rs) \| [API](https://nigeleke.github.io/style4rs/api/style4rs/index.html) \| [Coverage Report](https://nigeleke.github.io/style4rs/coverage/index.html)
 
-__Unsupported. I found hand-crafted `css` files, external to the code, served me better and were easier to maintain. As a result this repository will not be updated and has been archived."__
+__Unsupported__
+
+__I found hand-crafted `css` files, external to the code, served me better and were easier to maintain. As a result this repository will not be updated and has been archived."__
 
 Scoped CSS for Rust web frameworks like Leptos.
   
